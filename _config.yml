@@ -218,6 +218,7 @@ kramdown:
 include: ["_pages"]
 exclude:
   - al-folio-upgrade-report.md
+  - SESSION-HANDOFF.md
   - bin/
   - CONTRIBUTING.md
   - CUSTOMIZE.md
