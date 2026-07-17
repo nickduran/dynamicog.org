@@ -16,7 +16,7 @@ We regularly bring on undergraduate RAs to help run studies, work with behaviora
 language data, and contribute to ongoing projects. No specific prior experience is
 required — curiosity, reliability, and interest in the science matter most.
 
-- Fill out the **[research interest survey](#)** <!-- paste your current survey link -->
+- Fill out the **[research interest survey](https://docs.google.com/forms/d/e/1FAIpQLSfVqqUMXU5A4n526IVV_U1WQYEdF89ceDHYWbYTKNP-2SuS7w/viewform)**.
 - Email Nick at **nicholas.duran [at] utexas.edu** to introduce yourself.
 
 ## Prospective Graduate Students

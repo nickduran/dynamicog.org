@@ -364,8 +364,10 @@ scholar:
   details_link: Details
 
   query: "@*"
-  group_by: year
-  group_order: descending
+  # Flat running list (no year headings), newest first.
+  group_by: none
+  sort_by: year, month
+  order: descending
 
 # Display different badges withs stats for your publications
 # Customize badge behavior in _layouts/bib.liquid

@@ -38,3 +38,183 @@
   color: var(--global-text-color);
   font-weight: 600;
 }
+
+/* Project cards were elongated because source images had mismatched aspect
+   ratios (one portrait, one near-square) while cards are equal-height per row,
+   leaving big gaps. Normalize every card thumbnail to a uniform 3:2 crop. */
+.projects .card-img-top {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* -------------------------------------------------------------------------
+   Home hero banner (gold neural image + title/subtitle) — mirrors the old
+   WordPress home page. Rendered by the local _layouts/about.liquid override.
+   Full-bleed: breaks out of the centered content container to viewport width.
+   ------------------------------------------------------------------------- */
+/* The full-bleed hero extends ~half a scrollbar-width past each viewport edge
+   (vw includes the scrollbar). Clip that overflow so no horizontal scrollbar
+   appears. Safe here: the navbar is position:fixed, not sticky. */
+html,
+body {
+  overflow-x: hidden;
+}
+
+.dynamicog-hero {
+  position: relative;
+  /* Full-bleed via symmetric negative margins (avoids the 100vw scrollbar gap). */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: -1.5rem; /* snug it up under the navbar */
+  margin-bottom: 2.5rem;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  background-color: #0a0a0a;
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
+}
+
+.dynamicog-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* darker on the left where the title sits, lighter over the brain on the right */
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+.dynamicog-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--global-max-width, 930px);
+  margin: 0 auto;
+  padding: 2rem 20px;
+}
+
+.dynamicog-hero-title {
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  line-height: 1.05;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+.dynamicog-hero-subtitle {
+  margin: 0.4rem 0 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-style: italic;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 576px) {
+  .dynamicog-hero {
+    min-height: 180px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   People page — graduate-student cards with a photo box (or placeholder).
+   Grid so more students slot in cleanly as the lab grows.
+   ------------------------------------------------------------------------- */
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.person-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.person-photo {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--global-bg-color);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.person-photo--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--global-divider-color);
+  color: var(--global-text-color-light);
+  box-shadow: none;
+}
+
+.person-photo--placeholder i {
+  font-size: 1.6rem;
+}
+
+.person-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.person-name {
+  font-weight: 600;
+}
+
+.person-role {
+  font-size: 0.85rem;
+  color: var(--global-text-color-light);
+}
+
+/* Graduate students: larger photo box + name/label. */
+.people-grid--grad .person-photo {
+  width: 88px;
+  height: 88px;
+}
+
+.people-grid--grad .person-photo--placeholder i {
+  font-size: 2.2rem;
+}
+
+.people-grid--grad .person-name {
+  font-size: 1.15rem;
+}
+
+.people-grid--grad .person-role {
+  font-size: 0.95rem;
+}
+
+/* Research assistants: same small photo box, name only (not bolded). */
+.people-grid--ra .person-name {
+  font-weight: 400;
+}
+
+/* Home profile: the gem gives the floated headshot+info block only 1rem of
+   left margin, so wrapping body text crowds the monospace info lines. Add more
+   horizontal gap and a bottom gap so full-width text clears the block cleanly. */
+.profile.float-right {
+  margin-left: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+/* UT / Department of Psychology lockup at the top of the home body. */
+.ut-logo {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  margin: 0 0 1.5rem;
+}
+
+/* The lockup uses dark navy text; give it a light backing in dark mode. */
+html[data-theme="dark"] .ut-logo {
+  background: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+}

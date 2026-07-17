@@ -2,8 +2,8 @@
 # the socials will be displayed in the order they are defined here
 # for more information, please refer to the documentation of jekyll-socials plugin: https://github.com/george-gca/jekyll-socials
 email: nicholas.duran@utexas.edu # your email address
+scholar_userid: dU26pfIAAAAJ # Google Scholar user id (from ...citations?user=THIS_PART)
 github_username: nickduran # your GitHub username
+orcid_id: 0000-0002-8872-5617 # your ORCID id
 rss_icon: true # comment this line to hide the RSS icon
-# scholar_userid: # TODO: your Google Scholar ID (from the scholar profile URL: ...user=THIS_PART)
-# orcid_id: # TODO: your ORCID id, e.g. 0000-0000-0000-0000
-# osf_id: # TODO: your OSF id
+# osf_id: # OSF id intentionally omitted

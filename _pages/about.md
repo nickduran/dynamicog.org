@@ -2,9 +2,7 @@
 layout: about
 title: home
 permalink: /
-subtitle: >
-  <b>(applied) Cognitive Dynamics and Communication</b> · Department of Psychology ·
-  The University of Texas at Austin
+subtitle: (applied) Cognitive Dynamics and Communication (aCDC)
 
 profile:
   align: right
@@ -20,6 +18,11 @@ news: false             # News deferred for now (page hidden); flip to true to r
 selected_papers: false  # hide the "selected publications" section on the home page
 social: true
 ---
+
+<img
+  class="ut-logo"
+  src="{{ '/assets/img/ut_psychology_logo.png' | relative_url }}"
+  alt="The University of Texas at Austin — Department of Psychology, College of Liberal Arts" />
 
 We are a research lab at UT Austin dedicated to understanding basic cognitive and
 social processes, with the explicit goal of extending that knowledge to real-world

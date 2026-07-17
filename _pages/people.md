@@ -19,17 +19,40 @@ nav_order: 2
 ## Graduate Students
 
 {% if p.grad_students and p.grad_students.size > 0 %}
+<div class="people-grid people-grid--grad">
 {% for s in p.grad_students %}
-- **{{ s.name }}**{% if s.role %} — {{ s.role }}{% endif %}
+  <div class="person-card">
+    {% if s.image %}
+      <img class="person-photo" src="{{ s.image | prepend: 'assets/img/people/' | relative_url }}" alt="{{ s.name }}" />
+    {% else %}
+      <div class="person-photo person-photo--placeholder" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+    {% endif %}
+    <div class="person-info">
+      <span class="person-name">{{ s.name }}</span>
+      {% if s.role %}<span class="person-role">{{ s.role }}</span>{% endif %}
+    </div>
+  </div>
 {% endfor %}
+</div>
 {% else %}
 _Currently recruiting — see [Get Involved](/get-involved/)._
 {% endif %}
 
 ## Research Assistants
+<div class="people-grid people-grid--ra">
 {% for s in p.research_assistants %}
-- {{ s.name }}
+  <div class="person-card">
+    {% if s.image %}
+      <img class="person-photo" src="{{ s.image | prepend: 'assets/img/people/' | relative_url }}" alt="{{ s.name }}" />
+    {% else %}
+      <div class="person-photo person-photo--placeholder" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+    {% endif %}
+    <div class="person-info">
+      <span class="person-name">{{ s.name }}</span>
+    </div>
+  </div>
 {% endfor %}
+</div>
 
 ---
 

@@ -1,110 +1,137 @@
-# DynamiCog site migration — session handoff
+# DynamiCog site — session handoff & task list
 
-**Written 2026-07-17.** Pick this up in a fresh Claude Code session (YOLO/safehouse fine).
-Goal: finish the al-folio site and deploy `dynamicog.org` to GitHub Pages.
+**Last updated 2026-07-17 (end of session 2).** Goal: finish the al-folio site and
+launch `dynamicog.org` on GitHub Pages. Nothing is live yet — the old WordPress site is
+still up. This file is the single "fire right up" doc: current state, what's left, and how
+to deploy. Background (optional): `MIGRATION-PLAN.md`, `dynamicog-site/README.md`.
 
-Read `MIGRATION-PLAN.md` and `dynamicog-site/README.md` first for background. This file
-is the current state + exactly what's left.
+**To resume:** start Docker, `cd ~/dev/dynamicog.org && docker compose up -d`, open
+http://localhost:4000/, then work the **Task list (§4)** below.
 
 ---
 
-## 0. Where everything lives (IMPORTANT)
+## 0. Where everything lives
 
-- **The working al-folio repo is OUTSIDE Box:** `~/dev/dynamicog.org`
-  (i.e. `/Users/ndd697/dev/dynamicog.org`). It is a full git clone of al-folio with the
-  scaffold merged in. **All site edits happen here**, not in the Box scaffold.
-  → If running in safehouse, make sure `~/dev/dynamicog.org` is writable/mounted.
-- **Scaffold source** (already merged, reference only): `Website-Redesign/dynamicog-site/` (Box).
-- **Publication PDFs source of truth:** `~/Library/CloudStorage/Box-Box/research-hub/publications/`
-  with a full index in that folder's `CLAUDE.md` (journal/chapters/proceedings/other + citations).
-- **WordPress export** (for legacy images/text): `LAB-LOGISTICS/dynamicoglab.WordPress.2026-07-17.xml`.
-- **Live old site** (still WordPress, reachable): https://dynamicog.org
+- **Working repo (all edits happen here):** `~/dev/dynamicog.org` — full git clone of
+  al-folio with the scaffold merged in. On branch `main`. **Outside Box.**
+- **This handoff exists in two synced places:** `~/dev/dynamicog.org/SESSION-HANDOFF.md`
+  (canonical, in-repo but excluded from the build) and a copy at
+  `Box/LAB-LOGISTICS/Website-Redesign/SESSION-HANDOFF.md` (backup for when the repo isn't handy).
+- **Branding assets (headshots, logos, banner):** `Box/LAB-LOGISTICS/Branding/COLA_Psychology_logos/`
+  (`headshots/`, `otherbanners/brain-scan.png`, `COLA_Psychology_logos_formal|primary/4_RGB/`).
+- **Publication PDFs (source of truth):** `Box/research-hub/publications/` (index in its `CLAUDE.md`).
+- **WordPress export (legacy text/images):** `Box/LAB-LOGISTICS/dynamicoglab.WordPress.2026-07-17.xml`.
+- **Live old site (reachable, good for pulling legacy images):** https://dynamicog.org
 
 ## 1. How to preview locally
 
-Toolchain decision: **Docker** (system Ruby 2.6 is too old). Repo location: **outside Box**.
+Toolchain: **Docker** (system Ruby 2.6 is too old to run al-folio directly).
 ```bash
 cd ~/dev/dynamicog.org
-open -a Docker                 # start Docker Desktop, wait until `docker info` works
-docker compose up              # serves at http://localhost:4000  (see note below)
+open -a Docker                    # wait until `docker info` works
+docker compose up -d              # serves http://localhost:4000  (container serves 8080; remapped)
+docker compose logs --tail=40 jekyll   # check for build errors
+docker compose restart jekyll     # REQUIRED after any _config.yml change
+docker compose down               # stop when done
 ```
-- Port is remapped to **4000** via `docker-compose.override.yml` (git-ignored; container
-  serves 8080 internally). LiveReload is on — file edits auto-refresh.
-- `_config.yml` changes require a restart: `docker compose restart jekyll`.
-- `_pages`, `_layouts`, `assets`, `_bibliography` changes are picked up by the watcher.
+- Port 4000 via `docker-compose.override.yml` (git-ignored). LiveReload auto-refreshes.
+- `_pages`, `_layouts`, `assets`, `_data`, `_bibliography` edits: picked up by the watcher.
+- `_config.yml` edits: **restart required**.
+- Chrome disk-caches `main.css`/pages aggressively during preview — if a CSS change doesn't
+  show, hard-reload or append a throwaway query (`/?v=2`).
 
-## 2. Current state — DONE and verified
+## 2. Current git state — IMPORTANT
 
-- al-folio cloned + scaffold merged (`_config.yml` merged surgically; pages/projects/
-  bibliography/CNAME copied). Site builds clean, serves at localhost:4000.
-- **Nav** (final IA): home · research · people · publications · teaching · get involved.
-- Removed al-folio demo cruft (Einstein posts, sample projects/teachings, profiles/
-  dropdown/plugins/about_einstein pages).
-- **Home** (`_pages/about.md`): "selected publications" section removed
-  (`selected_papers: false`); News removed from home (`news: false`); right-side info
-  has "Department of Psychology" and "The University of Texas at Austin" on separate lines.
-- **Research** (`_pages/projects.md` + `_projects/*.md`): 6 cards (4 Active, 2 Past work).
-  Category labels ("Active"/"Past work") darkened + bolded via local override
-  `assets/css/main.scss` (they were near-invisible).
-- **Publications**: FIXED (scaffold shipped a broken `layout: bib` empty page). Now renders
-  all **63 papers** grouped by year, name-highlighted. Rebuilt `_bibliography/papers.bib`
-  from the research-hub index (was 27, now 63). Button labels renamed via local override
-  `_layouts/bib.liquid`: **Code→GitHub**, **Website→OSF**. Each entry has a PDF link
-  (7 also GitHub, 3 also OSF). 5 flagship papers marked `selected={true}`.
-- **PDFs hosted in-repo**: all 63 PDFs copied to `~/dev/dynamicog.org/publications/{journal,
-  chapters,proceedings,other}/`. Bib uses absolute `https://dynamicog.org/publications/...`
-  URLs → preserves old inbound links AND serves from the new site after cutover.
-- **Dropped for now** (files kept, `published: false` + collection `output: false`):
-  Resources (`_pages/resources.md`) and News (`_pages/news.md`, `_news/`, home news).
-  Both 404 currently; re-enable by flipping those flags.
+**Everything below is uncommitted** in the working tree (branch `main`, last commit
+`7e4ee0f`). Decide whether to commit before/after further edits.
 
-## 3. Decisions already made (do NOT re-litigate)
+```
+ M _config.yml            _data/people.yml       _data/socials.yml
+ M _pages/about.md        _pages/get-involved.md _pages/people.md
+ M assets/css/main.scss   SESSION-HANDOFF.md
+ M assets/img/prof_pic.jpg
+ M assets/img/projects/{911,coordination,eclippse,pcori,perspective}.jpg
+ ?? _layouts/about.liquid
+ ?? assets/img/banner_brain.png   assets/img/ut_psychology_logo.png
+```
 
-- Framework: al-folio. Build: Docker. Repo path: `~/dev/dynamicog.org`.
-- PDF strategy: in-repo under `/publications/` + absolute URLs (preserves links).
-- Publications grouped by year only (all types together), newest first. Year-label light
-  font is intentional — KEEP it (user likes it). Category labels on Research were the
-  ones that needed darkening (done).
-- DOI buttons were intentionally OMITTED to match the user's PDF/OSF/GitHub expectation.
-  (Data exists in research-hub/CLAUDE.md if the user later wants DOI buttons added.)
+## 3. DONE and verified (in the browser)
 
-## 4. What's LEFT — needs Nick's input (ASK, don't guess)
+**Structure & content**
+- al-folio + scaffold merged; builds clean. Nav IA: home · research · people · publications ·
+  teaching · get involved. al-folio demo cruft removed.
+- **Publications**: renders all **63 papers** as a **flat running list, newest first** (no year
+  headings — `_config.yml` scholar `group_by: none`, `sort_by: year, month`, `order: descending`).
+  Name-highlighted; each entry has a PDF link (7 also GitHub, 3 also OSF); button labels
+  renamed (Code→GitHub, Website→OSF) via local `_layouts/bib.liquid`. `_bibliography/papers.bib`
+  rebuilt from the research-hub index. DOI buttons intentionally omitted.
+- **PDFs hosted in-repo** under `/publications/{journal,chapters,proceedings,other}/`; bib uses
+  absolute `https://dynamicog.org/publications/...` URLs (preserves old inbound links + serves
+  post-cutover).
+- **Dropped for now** (files kept, `published:false`): Resources & News (flip flags to re-enable).
 
-1. **RA interest-survey link** — `_pages/get-involved.md` has a dead `#` placeholder.
-2. **UT Austin course listings** — `_pages/teaching.md` says "_To be added_" (ASU archive
-   is already there). Need current UT course names/descriptions.
-3. **Google Scholar / ORCID / OSF ids** — `_data/socials.yml` has TODO placeholders.
-4. **Headshot** — currently al-folio's stock photo. Candidate from old site:
-   `https://dynamicog.org/wp-content/uploads/2018/12/nduran_crop.jpg` (or 2019/04 version).
-   Confirm which photo to use, or Nick supplies a new one → save as `assets/img/prof_pic.jpg`.
-5. **Project card images** — all 6 are placeholders. Legacy images that map:
-   - Past work → `.../2013/09/perspectiveTaking.jpg`, `.../2013/09/coordination.jpg`
-   - The 4 Active projects (911, ECLIPPSE, PCORI, Robot) have NO legacy image — need new
-     images or Nick's call to leave abstract/placeholder.
-6. **Grad students** — `_data/people.yml` `grad_students: []` (shows "recruiting"). Add if any.
-7. **Confirm publication details** — the 63 bib entries were generated from the research-hub
-   index; volumes/pages are mostly complete but a few proceedings lack them. Worth a skim.
+**Home page** (`_pages/about.md` + local `_layouts/about.liquid`)
+- Full-bleed **gold "neural" hero banner** (`assets/img/banner_brain.png`) with "DynamiCog Lab"
+  + "(applied) Cognitive Dynamics and Communication (aCDC)" overlay. Verified light + dark, no
+  horizontal scrollbar. CSS in `main.scss` (`.dynamicog-hero*`, `html,body{overflow-x:hidden}`).
+- **UT/Dept-of-Psychology lockup** (`assets/img/ut_psychology_logo.png`) top-left of the body;
+  gets a white card backing in dark mode.
+- **Headshot** `assets/img/prof_pic.jpg` — grey-tee tea-field photo, auto-oriented + cropped
+  (wider crop, chin included). Circular.
+- **Social icons** (bottom of profile column): email · Google Scholar · GitHub · ORCID · RSS.
+  `_data/socials.yml`: `scholar_userid: dU26pfIAAAAJ`, `orcid_id: 0000-0002-8872-5617`. OSF omitted.
+- Profile spacing fixed so wrapping body text no longer crowds the info block.
 
-## 5. What's LEFT — can be done autonomously (safe in YOLO)
+**Research page** (`_pages/projects.md` + `_projects/*.md`)
+- 6 cards (4 Active, 2 Past work). Category labels darkened/bolded.
+- Card thumbnails normalized to a uniform **3:2 crop** (`.projects .card-img-top` in `main.scss`)
+  — fixed the elongated-card / whitespace problem.
+- Real images wired from the old site: **911** (phone screen), **ECLIPPSE** (physician typing),
+  **PCORI** (doctor/patient split). **Past work**: coordination + perspective (legacy).
 
-- **Wire legacy images** once Nick confirms #4/#5: download from the live site with `curl`,
-  save to `assets/img/prof_pic.jpg` and `assets/img/projects/{coordination,perspective}.jpg`
-  (overwrite placeholders; keep the exact filenames the `_projects/*.md` `img:` fields use).
-- **Lab logos** — check `LAB-LOGISTICS/Branding/` for a lab logo; can be added to the navbar/
-  footer if desired.
+**People page** (`_pages/people.md` + `_data/people.yml`)
+- Grad students + research assistants render as **photo-box cards** (`.people-grid`/`.person-card`).
+  Dashed-circle user-icon placeholder when no photo. Grad cards larger (`--grad`); RA cards small,
+  name-only (`--ra`). Add a photo: drop a square image in `assets/img/people/` and set that
+  person's `image:` field. Grad student **Jiahan (Nicole) Li** added.
 
-## 6. DEPLOY — only after Nick says go (nothing live yet)
+## 4. TASK LIST — what's left
 
-Per `MIGRATION-PLAN.md §5`. Steps:
-1. **GitHub repo**: create (e.g. `nickduran/dynamicog.org` or a `dynamicog-lab` org).
-   `gh` is installed and authenticated. Push `~/dev/dynamicog.org` `main`.
-2. **Deploy Action**: al-folio ships `.github/workflows/deploy.yml` (keep the stock one; it
-   builds with jekyll-scholar + imagemagick and publishes to `gh-pages`). The scaffold's
-   simpler deploy.yml was NOT copied over — stock is better. Verify `CNAME` (= `dynamicog.org`)
-   is at repo root (it is).
-3. **Repo Settings → Pages**: source = `gh-pages` branch; custom domain = `dynamicog.org`;
-   enable Enforce HTTPS after cert provisions.
-4. **DNS at registrar** (check `whois dynamicog.org` first — may be Bluehost):
+### A. Needs Nick's input / assets
+- [ ] **Human–Robot Co-Adaptation project image** — still a stock placeholder
+      (`assets/img/projects/robot.jpg`); no match on the old site. Provide one → wire in.
+- [ ] **UT Austin course listings** — `_pages/teaching.md` "Courses at UT Austin" left blank
+      by choice (ASU archive already present). Fill when ready.
+- [ ] **Grad/RA photos** — optional; add square images to `assets/img/people/` + set `image:`
+      fields in `_data/people.yml`. Add more grad students there as they join.
+- [ ] **Skim publication details** — 63 bib entries generated from the research-hub index;
+      a few proceedings may lack volume/pages. Worth a once-over.
+- [ ] **Higher-res assets (optional)** — banner `brain-scan.png` (845×631) and
+      `projects/perspective.jpg` (222×223) upscale; swap if better versions exist.
+
+### B. Can be done autonomously
+- [ ] **Re-enable Resources/News** if wanted (flip `published:`/collection `output:` flags).
+- [ ] **Run overrides audit before deploy** — `bundle exec al-folio upgrade overrides audit`,
+      review + commit `.al-folio-overrides.yml` (local overrides: `_layouts/bib.liquid`,
+      `_layouts/about.liquid`, `assets/css/main.scss`).
+- [ ] **Commit the working tree** (see §2) once edits settle.
+
+### C. Deploy (only on Nick's go — see §6)
+- [ ] Create GitHub repo, push, enable Pages, point DNS, verify.
+
+## 5. Decisions locked (do NOT re-litigate)
+- Framework al-folio; build via Docker; repo at `~/dev/dynamicog.org`.
+- PDFs in-repo under `/publications/` with absolute URLs.
+- Publications = **flat running list, newest first** (changed from year-grouped in session 2b).
+- DOI buttons omitted (PDF/OSF/GitHub only). Data in research-hub/CLAUDE.md if ever wanted.
+- OSF social icon omitted. Headshot may be casual ("somewhat unprofessional" is fine).
+
+## 6. DEPLOY checklist (nothing live yet)
+1. **GitHub repo**: create (e.g. `nickduran/dynamicog.org`). `gh` is installed/authed. Push `main`.
+2. **Action**: keep al-folio's stock `.github/workflows/deploy.yml` (builds w/ jekyll-scholar +
+   imagemagick → `gh-pages`). `CNAME` (= `dynamicog.org`) is at repo root already.
+3. **Settings → Pages**: source `gh-pages`; custom domain `dynamicog.org`; Enforce HTTPS after cert.
+4. **DNS at registrar** (`whois dynamicog.org` first — likely Bluehost):
    | Type | Host | Value |
    |------|------|-------|
    | A | @ | 185.199.108.153 |
@@ -112,14 +139,18 @@ Per `MIGRATION-PLAN.md §5`. Steps:
    | A | @ | 185.199.110.153 |
    | A | @ | 185.199.111.153 |
    | CNAME | www | `<github-username>.github.io` |
-5. Lower Bluehost TTL a day ahead; cut over; verify apex + www resolve, HTTPS green, and a
-   sample of `/publications/journal/*.pdf` links open. Keep Bluehost ~2–4 wks as safety net.
-   **Keep the domain registration.**
+5. Lower TTL a day ahead; cut over; verify apex + www + HTTPS + a sample of
+   `/publications/journal/*.pdf`. Keep Bluehost 2–4 wks as safety net. **Keep the domain reg.**
 
-## 7. Gotchas learned this session
-
-- al-folio here is a **gem theme** (`theme: al_folio_core`), so layouts/includes/SCSS live in
-  the gem (`/usr/local/bundle/gems/al_folio_core-*/`). Override by placing a same-path file
-  locally (already done for `_layouts/bib.liquid` and `assets/css/main.scss`).
+## 7. Gotchas
+- al-folio is a **gem theme** (`theme: al_folio_core`); layouts/includes/SCSS live in the gem
+  (`/usr/local/bundle/gems/al_folio_core-*/` inside the container). Override by placing a
+  same-path file locally (done: `_layouts/bib.liquid`, `_layouts/about.liquid`, `assets/css/main.scss`).
+- `test/style_contract.js` fails just because `_layouts/` exists — that gate is for the upstream
+  *starter* repo; a customized site legitimately uses overrides. Stock `deploy.yml` (plain
+  `jekyll build`) is unaffected.
+- The Docker container occasionally stops; `docker compose up -d` restarts it. New `_layouts`/
+  `assets` files sometimes need `docker compose restart jekyll` to register.
 - zsh aborts commands on unmatched globs (`*.PDF`) — use `find` for file ops.
-- New `_layouts`/`assets` files sometimes need `docker compose restart jekyll` to register.
+- Image processing (crop/convert) is easiest via the container's ImageMagick 7
+  (`docker exec <container> magick ...`); the repo is bind-mounted at `/srv/jekyll`.

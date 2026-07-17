@@ -16,8 +16,13 @@ director:
     scholar: ""
     github: https://github.com/nickduran
 
-# Current graduate students (fill in as you recruit at UT)
-grad_students: []
+# Current graduate students (fill in as you recruit at UT).
+# To add a photo: drop a square-ish image in assets/img/people/ and set `image:`
+# to its filename (e.g. image: jiahan_li.jpg). Omit `image:` to show a placeholder.
+grad_students:
+  - name: Jiahan (Nicole) Li
+    role: Graduate Student
+    image: # e.g. jiahan_li.jpg — add to assets/img/people/
 
 # Current undergraduate research assistants (Spring/Summer 2026)
 research_assistants:
