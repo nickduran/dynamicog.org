@@ -1,0 +1,67 @@
+# DynamiCog Lab members. Edit this file to update the People page.
+# Add a headshot to assets/img/people/<image> and reference it below (optional).
+
+director:
+  name: Nick Duran
+  role: Lab Director
+  image: prof_pic.jpg
+  bio: >
+    Associate Professor in the Department of Psychology, College of Liberal Arts,
+    at The University of Texas at Austin. Ph.D. in Cognitive Psychology from the
+    University of Memphis (NSF Graduate Research Fellow); NSF Postdoctoral Research
+    Fellow at the University of California, Merced (Cognitive and Information Sciences)
+    and research affiliate at University College London.
+  links:
+    email: nicholas.duran@utexas.edu
+    scholar: ""
+    github: https://github.com/nickduran
+
+# Current graduate students (fill in as you recruit at UT)
+grad_students: []
+
+# Current undergraduate research assistants (Spring/Summer 2026)
+research_assistants:
+  - name: Samantha Slogoff
+  - name: Annabelle Deason
+  - name: Nadia Talanker
+  - name: Niyati Naveen Nair
+  - name: Madison Jaques
+  - name: Judah Castillo
+  - name: Natalie Liu
+  - name: Samantha Lee
+  - name: Rebekah King
+
+# Graduate alumni (committee chair) with placements — a lab selling point, keep it
+grad_alumni:
+  - name: Anuja Thomas
+    placement: "Ph.D. student, Florida State University"
+  - name: Amie Paige
+    placement: "Ph.D. student, SUNY Stony Brook"
+  - name: Jade Yonehiro
+    placement: "Ph.D. student, University of Colorado, Boulder"
+  - name: Chelsea Johnson
+    placement: "Ph.D. student, ASU (Human Systems Engineering)"
+  - name: J.P. Gonzales
+    placement: "Ph.D. student, Miami University; Industry"
+  - name: Josh Maxwell
+    placement: "Ph.D. student, University of New Mexico"
+  - name: Stacie Lafko
+    placement: "Ph.D. student, ASU (Human Systems Engineering)"
+
+# Faculty collaborators (academic; trim/extend as you like)
+collaborators:
+  - Rick Dale
+  - Riccardo Fusaroli
+  - Scott Crossley
+  - Sidney D'Mello
+  - Moreno Coco
+  - Danielle McNamara
+  - Dean Schillinger
+  - Daniel Richardson
+  - Ashley Randall
+  - Stephen Nicholson
+  - Philip McCarthy
+  - Alexandra Paxton
+  - Alexia Galati
+  - Denis O'Hora
+  - Valerie Shute
