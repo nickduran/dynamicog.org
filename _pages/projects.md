@@ -5,7 +5,7 @@ permalink: /projects/
 description: Grant-funded projects and ongoing lines of work in the DynamiCog Lab.
 nav: true
 nav_order: 1
-display_categories: [Active, Past work]
+display_categories: ["Grant-Funded Projects", "Other Ongoing Projects", "Previous Projects"]
 horizontal: false
 ---
 
@@ -14,7 +14,8 @@ horizontal: false
 {% if site.enable_project_categories and page.display_categories %}
   <!-- Display categorized projects -->
   {% for category in page.display_categories %}
-  <a id="{{ category }}" href=".#{{ category }}">
+  {% assign cat_slug = category | slugify %}
+  <a id="{{ cat_slug }}" href=".#{{ cat_slug }}">
     <h2 class="category">{{ category }}</h2>
   </a>
   {% assign categorized_projects = site.projects | where: "category", category %}

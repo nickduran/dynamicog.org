@@ -1,6 +1,6 @@
 # DynamiCog site — session handoff & task list
 
-**Last updated 2026-07-17 (end of session 2).** Goal: finish the al-folio site and
+**Last updated 2026-09-21 (end of session 3).** Goal: finish the al-folio site and
 launch `dynamicog.org` on GitHub Pages. Nothing is live yet — the old WordPress site is
 still up. This file is the single "fire right up" doc: current state, what's left, and how
 to deploy. Background (optional): `MIGRATION-PLAN.md`, `dynamicog-site/README.md`.
@@ -40,26 +40,24 @@ docker compose down               # stop when done
 - Chrome disk-caches `main.css`/pages aggressively during preview — if a CSS change doesn't
   show, hard-reload or append a throwaway query (`/?v=2`).
 
-## 2. Current git state — IMPORTANT
+## 2. Current git state
 
-**Everything below is uncommitted** in the working tree (branch `main`, last commit
-`7e4ee0f`). Decide whether to commit before/after further edits.
+Branch `main`, last commit `c759159` ("Home banner/branding, publications flat list, people cards,
+project images"). Session 2's working tree **was committed** — the old warning here was stale.
 
-```
- M _config.yml            _data/people.yml       _data/socials.yml
- M _pages/about.md        _pages/get-involved.md _pages/people.md
- M assets/css/main.scss   SESSION-HANDOFF.md
- M assets/img/prof_pic.jpg
- M assets/img/projects/{911,coordination,eclippse,pcori,perspective}.jpg
- ?? _layouts/about.liquid
- ?? assets/img/banner_brain.png   assets/img/ut_psychology_logo.png
-```
+**Session 3's research-page rebuild is uncommitted:** 6 project files and 6 images deleted, 12
+project files and 12 images added, plus `_pages/projects.md` and a new `_includes/projects.liquid`
+override. `git status` in the repo is the live list.
+
+**`origin` still points at `alshedivat/al-folio`.** There is no `nickduran/dynamicog.org` remote
+yet, so the repo has no off-machine copy — see §6.
 
 ## 3. DONE and verified (in the browser)
 
 **Structure & content**
 - al-folio + scaffold merged; builds clean. Nav IA: home · research · people · publications ·
-  teaching · get involved. al-folio demo cruft removed.
+  teaching · get involved. **Demo cruft is NOT fully removed** — this line previously claimed it was.
+  Four demo pages are still reachable and in the sitemap; see §4B.
 - **Publications**: renders all **63 papers** as a **flat running list, newest first** (no year
   headings — `_config.yml` scholar `group_by: none`, `sort_by: year, month`, `order: descending`).
   Name-highlighted; each entry has a PDF link (7 also GitHub, 3 also OSF); button labels
@@ -82,39 +80,63 @@ docker compose down               # stop when done
   `_data/socials.yml`: `scholar_userid: dU26pfIAAAAJ`, `orcid_id: 0000-0002-8872-5617`. OSF omitted.
 - Profile spacing fixed so wrapping body text no longer crowds the info block.
 
-**Research page** (`_pages/projects.md` + `_projects/*.md`)
-- 6 cards (4 Active, 2 Past work). Category labels darkened/bolded.
-- Card thumbnails normalized to a uniform **3:2 crop** (`.projects .card-img-top` in `main.scss`)
-  — fixed the elongated-card / whitespace problem.
-- Real images wired from the old site: **911** (phone screen), **ECLIPPSE** (physician typing),
-  **PCORI** (doctor/patient split). **Past work**: coordination + perspective (legacy).
-
 **People page** (`_pages/people.md` + `_data/people.yml`)
 - Grad students + research assistants render as **photo-box cards** (`.people-grid`/`.person-card`).
   Dashed-circle user-icon placeholder when no photo. Grad cards larger (`--grad`); RA cards small,
   name-only (`--ra`). Add a photo: drop a square image in `assets/img/people/` and set that
   person's `image:` field. Grad student **Jiahan (Nicole) Li** added.
 
+**Research page — rebuilt in session 3** (`_pages/projects.md` + `_projects/*.md`)
+- Now **three sections in this order**: Grant-Funded Projects (6) · Other Ongoing Projects (2) ·
+  Previous Projects (4). Driven by `display_categories`; each project's `category` places it and
+  `importance` orders it within the section. Category anchors are slugified (they previously emitted
+  `id="Grant-Funded Projects"` with a literal space).
+- **Twelve projects**, restored from the live WordPress site's own three sections, plus
+  Human-Robot Co-Adaptation which post-dates that site. Files renamed to clean slugs
+  (`/projects/suspicion-911/`), dropping the `1_`…`6_` prefixes.
+- Each detail page carries the **full formal title**, the **award line** (all six grant-funded), the
+  **original description verbatim** from the WordPress export, and a **Selected papers** list.
+- Cards show a **short title** via a `card_title` front-matter field, read by a new local
+  `_includes/projects.liquid` override. Without it the formal titles run eight lines and swamp the
+  card. `card_title` falls back to `title` when absent.
+- Card thumbnails are normalized to a uniform **3:2 crop** by `.projects .card-img-top` in
+  `main.scss` (`object-fit: cover`), so source images do not need pre-cropping.
+- Verified: builds clean, all 12 detail pages 200, all 12 cards have images, 47 citations, every
+  cited PDF resolves on disk.
+- **Three images are generated filler** in a matched gold-on-dark style: `discourse-analysis.jpg`,
+  `semantic-models.jpg`, `robot-coadaptation.jpg`. The last replaced al-folio's stock
+  sunset-over-rocks photo. The other nine are real images pulled from the old site.
+
 ## 4. TASK LIST — what's left
 
 ### A. Needs Nick's input / assets
-- [ ] **Human–Robot Co-Adaptation project image** — still a stock placeholder
-      (`assets/img/projects/robot.jpg`); no match on the old site. Provide one → wire in.
-- [ ] **UT Austin course listings** — `_pages/teaching.md` "Courses at UT Austin" left blank
-      by choice (ASU archive already present). Fill when ready.
-- [ ] **Grad/RA photos** — optional; add square images to `assets/img/people/` + set `image:`
-      fields in `_data/people.yml`. Add more grad students there as they join.
-- [ ] **Skim publication details** — 63 bib entries generated from the research-hub index;
-      a few proceedings may lack volume/pages. Worth a once-over.
-- [ ] **Higher-res assets (optional)** — banner `brain-scan.png` (845×631) and
-      `projects/perspective.jpg` (222×223) upscale; swap if better versions exist.
+- [ ] **Human-Robot Co-Adaptation image** — currently generated filler, not a real image.
+- [ ] **UT Austin course listings** — `_pages/teaching.md` still ships the visible placeholder
+      "Courses at UT Austin / _To be added._" Fill it or drop the heading.
+- [ ] **Get Involved / NBC framing** — the page sends prospective PhD students to "the UT Austin
+      Department of Psychology graduate program" without naming the **NBC area**. Application
+      season is now.
+- [ ] **Grad/RA photos** — optional; square images in `assets/img/people/` (the folder does not
+      exist yet) plus `image:` fields in `_data/people.yml`.
+- [ ] **Skim publication details** — a few proceedings may lack volume/pages.
 
 ### B. Can be done autonomously
-- [ ] **Re-enable Resources/News** if wanted (flip `published:`/collection `output:` flags).
-- [ ] **Run overrides audit before deploy** — `bundle exec al-folio upgrade overrides audit`,
-      review + commit `.al-folio-overrides.yml` (local overrides: `_layouts/bib.liquid`,
-      `_layouts/about.liquid`, `assets/css/main.scss`).
-- [ ] **Commit the working tree** (see §2) once edits settle.
+- [ ] **Remove the al-folio demo pages — blocker, do before the first push.** `/cv/` (Albert
+      Einstein), `/books/`, `/repositories/`, `/blog/` all return 200 and are in `sitemap.xml`.
+      Strip `external_sources` from `_config.yml` and fix `blog_name`/`blog_description`, which
+      still read "al-folio — a simple whitespace theme for academics". Delete the demo assets
+      (`the_godfather`, `rhino`, `template_error`, the demo publication previews).
+- [ ] **Fix `_data/people.yml`** — drop Natalie Liu (withdrew 2026-09-15); add Farhana Anisha, the
+      lab manager, who is missing entirely; fill the director's empty `scholar:` field.
+- [ ] **Prune the inherited upstream workflows** — ~18 of them (axe, lighthouse, codeql,
+      visual-regression, unit-tests, prettier…) will fire on the new repo and mostly fail. Keep
+      `deploy.yml`.
+- [ ] **Run the overrides audit** — `bundle exec al-folio upgrade overrides audit`; commit
+      `.al-folio-overrides.yml`, which has never been generated. Local overrides are now
+      **five**: `_layouts/bib.liquid`, `_layouts/about.liquid`, `_includes/projects.liquid`,
+      `assets/css/main.scss`, and `_pages/projects.md`.
+- [ ] **Re-enable Resources/News** if wanted (`published:` flags).
+- [ ] **Commit the session-3 work** (see §2).
 
 ### C. Deploy (only on Nick's go — see §6)
 - [ ] Create GitHub repo, push, enable Pages, point DNS, verify.
@@ -126,8 +148,23 @@ docker compose down               # stop when done
 - DOI buttons omitted (PDF/OSF/GitHub only). Data in research-hub/CLAUDE.md if ever wanted.
 - OSF social icon omitted. Headshot may be casual ("somewhat unprofessional" is fine).
 
+- Research page = **three sections** sourced from the live WordPress site's own grouping, not from
+  the new site's earlier Active/Past-work tagging (which had mis-bucketed two grant-funded projects).
+- Project URLs are **clean slugs**, no numeric prefixes.
+- **Selected papers are hand-written text, generated from `papers.bib` at write time but not wired
+  to it.** The alternative — tagging bib entries with a `project` field and rendering each page with
+  `{% raw %}{% bibliography --query @*[project=...] %}{% endraw %}` — was offered and declined. The
+  mechanism does work (`bibliography[query]` delegates to bibtex-ruby, which supports arbitrary
+  field queries) if this is ever revisited. **Consequence: adding a paper to `papers.bib` does not
+  update the twelve project pages.**
+- Card titles are short (`card_title`); detail pages keep the full formal title.
+
 ## 6. DEPLOY checklist (nothing live yet)
+0. **Clear the §4B demo-page blocker first.** Pushing with `/cv/` serving Albert Einstein and
+   `/blog/` branded al-folio puts them in the sitemap.
 1. **GitHub repo**: create (e.g. `nickduran/dynamicog.org`). `gh` is installed/authed. Push `main`.
+   This is also the first off-machine backup — the repo currently has no remote (ADR-0020).
+   Verify the GitHub-hosted URL completely **before** touching DNS.
 2. **Action**: keep al-folio's stock `.github/workflows/deploy.yml` (builds w/ jekyll-scholar +
    imagemagick → `gh-pages`). `CNAME` (= `dynamicog.org`) is at repo root already.
 3. **Settings → Pages**: source `gh-pages`; custom domain `dynamicog.org`; Enforce HTTPS after cert.
