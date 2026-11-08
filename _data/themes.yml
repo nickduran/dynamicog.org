@@ -24,7 +24,7 @@
     a stranger. We work from recordings of behavior as it actually occurred,
     including what people reveal when they are under pressure or holding
     something back.
-  image: ""
+  image: "in-the-wild.png"
   projects:
     - suspicion-911
     - patient-provider-llm

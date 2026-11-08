@@ -68,7 +68,7 @@ assert_count    "home: lockup not in body"  "$BASE/" 'class="ut-logo"' 0
 # ---- Task 4: theme rows -----------------------------------------------------
 assert_count    "themes: four rows"               "$BASE/" '<article class="dc-theme"' 4
 assert_contains "themes: titles in order"         "$BASE/" 'Communication and coordination.*Natural behavior in the wild.*Computation for behavior.*People and machines, adapting'
-assert_count    "themes: three placeholders (01 has art)" "$BASE/" 'dc-tile--placeholder' 3
+assert_count    "themes: two placeholders (01, 02 have art)" "$BASE/" 'dc-tile--placeholder' 2
 assert_contains "themes: chip links to project"   "$BASE/" 'class="dc-chip" href="/projects/cps-coordination/"[^>]*>Coordination in Collaborative Problem Solving<'
 assert_count    "themes: patient-provider appears twice" "$BASE/" 'href="/projects/patient-provider-llm/"' 2
 assert_count    "themes: no unresolved slugs"     "$BASE/" 'theme-row: unresolved project slug' 0
@@ -100,6 +100,9 @@ assert_contains "css: chips carry an arrow"       "$BASE/assets/css/main.css" '\
 assert_contains "themes: coordination tile is the real drawing" "$BASE/" 'id="theme-coordination".*themes/coordination'
 assert_count    "themes: a 1800x1200 source exists" "$BASE/assets/img/themes/coordination.png" 'PNG' 1
 assert_count    "themes: coordination has no placeholder" "$BASE/" 'id="theme-coordination"[^☃]{0,400}dc-tile--placeholder' 0
+
+assert_contains "themes: in-the-wild tile is the real drawing" "$BASE/" 'id="theme-in-the-wild".*themes/in-the-wild'
+assert_count    "themes: in-the-wild source exists" "$BASE/assets/img/themes/in-the-wild.png" 'PNG' 1
 
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

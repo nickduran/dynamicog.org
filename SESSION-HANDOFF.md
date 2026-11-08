@@ -136,8 +136,8 @@ plugin is configured), `nav: false`, out of the sitemap. **The twelve detail pag
 may come later when there is something to spotlight. The 2026-09-21 notes below describe the page as
 it was before retirement.
 
-**First real theme tile (2026-11-08):** `assets/img/themes/coordination.png` (1800×1200, padded to
-3:2 from a square Nano Banana generation) set on theme 01 in `_data/themes.yml`. Source and brief in
+**First real theme tiles (2026-11-08):** `assets/img/themes/coordination.png` and `in-the-wild.png` (each 1800×1200, padded to
+3:2 from square Nano Banana generations) set on themes 01 and 02 in `_data/themes.yml`. Sources and briefs in
 Box `Website-Redesign/Art-Direction/`.
 
 **Research page — rebuilt in session 3** (`_pages/projects.md` + `_projects/*.md`)
