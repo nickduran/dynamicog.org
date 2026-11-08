@@ -42,25 +42,31 @@ docker compose down               # stop when done
 
 ## 2. Current git state
 
-Branch `main`. Session 3's research-page rebuild **is committed** (`349e5be`); the earlier
-"uncommitted" note here was stale. Session 4 (2026-11-08) added the home-page redesign in a
-short series of commits on `main`:
+Branch `main`, tracking **`origin` = `https://github.com/nickduran/dynamicog.org` (private, created
+2026-11-08)**. The al-folio template remote is now `upstream`. First off-machine backup exists.
+
+**History was rewritten once, 2026-11-08, before the first push.** The repo had been a shallow
+clone (al-folio at depth 1 plus Nick's commits), which GitHub refuses to accept. Rather than pull
+~370 MB of upstream history, the imported al-folio snapshot ("Update Google Scholar citations") was
+grafted into a true root, so the repo is self-contained (13 commits, ~49 MB). Every hash changed;
+older notes citing `349e5be`, `c759159`, `26aa0a9`, etc. refer to this same history under its old
+hashes. A pre-rewrite bundle is at `~/dev/dynamicog.org-pre-graft-2026-11-08.bundle`.
 
 ```
-088e289 test(home): responsive and font-fallback screenshot script
-707a054 feat(home): Ink dark mode with banner band
-519b8fc feat(home): four theme rows from _data/themes.yml with placeholder tiles and project chips
-c50db2d feat(home): hero block with eyebrow, headline, methods, links, recruiting, photo
-c3f72a9 feat(footer): in-flow footer with UT lockup and short credit
-a2c04b8 feat(home): site-wide Paper/Ink tokens, Fraunces+Inter, in-flow footer flag; add check script
-349e5be Rebuild research page: three sections, twelve projects, selected papers
-c759159 Home banner/branding, publications flat list, people cards, project images
-7e4ee0f Add repo-local SESSION-HANDOFF.md (excluded from build)
-26aa0a9 DynamiCog site: merge scaffold, rebuild publications, apply review edits
+21ebac8 fix(home): review fixes — AA-contrast gold-deep, nowrap methods/accent, trimmed banner, aligned dark band
+324dc6b chore(home): regression checks, overrides audit, handoff update
+3b627f6 test(home): responsive and font-fallback screenshot script
+eeee075 feat(home): Ink dark mode with banner band
+5ae698a feat(home): four theme rows from _data/themes.yml with placeholder tiles and project chips
+dfb6541 feat(home): hero block with eyebrow, headline, methods, links, recruiting, photo
+f612d90 feat(footer): in-flow footer with UT lockup and short credit
+b98b2ea feat(home): site-wide Paper/Ink tokens, Fraunces+Inter, in-flow footer flag; add check script
+ad583df Rebuild research page: three sections, twelve projects, selected papers
+9ac3e29 Home banner/branding, publications flat list, people cards, project images
+cdba17b Add repo-local SESSION-HANDOFF.md (excluded from build)
+3314af0 DynamiCog site: merge scaffold, rebuild publications, apply review edits
+e9ef82b Update Google Scholar citations
 ```
-
-**`origin` still points at `alshedivat/al-folio`.** There is no `nickduran/dynamicog.org` remote
-yet, so the repo has no off-machine copy — see §6.
 
 ## 3. DONE and verified (in the browser)
 
@@ -206,8 +212,8 @@ yet, so the repo has no off-machine copy — see §6.
 ## 6. DEPLOY checklist (nothing live yet)
 0. **Clear the §4B demo-page blocker first.** Pushing with `/cv/` serving Albert Einstein and
    `/blog/` branded al-folio puts them in the sitemap.
-1. **GitHub repo**: create (e.g. `nickduran/dynamicog.org`). `gh` is installed/authed. Push `main`.
-   This is also the first off-machine backup — the repo currently has no remote (ADR-0020).
+1. **GitHub repo**: ~~create~~ **done 2026-11-08** — `nickduran/dynamicog.org`, private, `main` pushed.
+   **GitHub Pages on a private repo needs GitHub Pro or the repo made public**; decide at deploy time.
    Verify the GitHub-hosted URL completely **before** touching DNS.
 2. **Action**: keep al-folio's stock `.github/workflows/deploy.yml` (builds w/ jekyll-scholar +
    imagemagick → `gh-pages`). `CNAME` (= `dynamicog.org`) is at repo root already.
