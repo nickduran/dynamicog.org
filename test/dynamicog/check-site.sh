@@ -72,5 +72,12 @@ assert_count    "themes: 13 chips total"          "$BASE/" 'class="dc-chip"' 13
 assert_contains "dark: band has banner image" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band\s*\{[^}]*banner_brain\.png'
 assert_contains "dark: hero areas reflow"     "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero\s*\{[^}]*grid-template-areas:\s*"band band"'
 
+# ---- Task 7: regression on other pages --------------------------------------
+for pg in /projects/ /people/ /publications/ /teaching/ /get-involved/; do assert_status "$BASE$pg" 200; done
+for sl in action-dynamics-deception cps-coordination discourse-analysis dynamic-psycholinguistics language-deception linguistic-concordance multimodal-coordination patient-provider-llm perspective-taking robot-coadaptation semantic-models suspicion-911; do assert_status "$BASE/projects/$sl/" 200; done
+assert_count    "publications: 63 entries"      "$BASE/publications/" 'class="row"' 63
+assert_contains "projects: grant grid intact"   "$BASE/projects/" 'Grant-Funded Projects.*Other Ongoing Projects.*Previous Projects'
+assert_contains "nav: research link present"    "$BASE/" 'href="/projects/"[^>]*>\s*research'
+
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

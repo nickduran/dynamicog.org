@@ -1,6 +1,6 @@
 # DynamiCog site — session handoff & task list
 
-**Last updated 2026-09-21 (end of session 3).** Goal: finish the al-folio site and
+**Last updated 2026-11-08 (end of session 4: home-page redesign).** Goal: finish the al-folio site and
 launch `dynamicog.org` on GitHub Pages. Nothing is live yet — the old WordPress site is
 still up. This file is the single "fire right up" doc: current state, what's left, and how
 to deploy. Background (optional): `MIGRATION-PLAN.md`, `dynamicog-site/README.md`.
@@ -42,12 +42,22 @@ docker compose down               # stop when done
 
 ## 2. Current git state
 
-Branch `main`, last commit `c759159` ("Home banner/branding, publications flat list, people cards,
-project images"). Session 2's working tree **was committed** — the old warning here was stale.
+Branch `main`. Session 3's research-page rebuild **is committed** (`349e5be`); the earlier
+"uncommitted" note here was stale. Session 4 (2026-11-08) added the home-page redesign in a
+short series of commits on `main`:
 
-**Session 3's research-page rebuild is uncommitted:** 6 project files and 6 images deleted, 12
-project files and 12 images added, plus `_pages/projects.md` and a new `_includes/projects.liquid`
-override. `git status` in the repo is the live list.
+```
+088e289 test(home): responsive and font-fallback screenshot script
+707a054 feat(home): Ink dark mode with banner band
+519b8fc feat(home): four theme rows from _data/themes.yml with placeholder tiles and project chips
+c50db2d feat(home): hero block with eyebrow, headline, methods, links, recruiting, photo
+c3f72a9 feat(footer): in-flow footer with UT lockup and short credit
+a2c04b8 feat(home): site-wide Paper/Ink tokens, Fraunces+Inter, in-flow footer flag; add check script
+349e5be Rebuild research page: three sections, twelve projects, selected papers
+c759159 Home banner/branding, publications flat list, people cards, project images
+7e4ee0f Add repo-local SESSION-HANDOFF.md (excluded from build)
+26aa0a9 DynamiCog site: merge scaffold, rebuild publications, apply review edits
+```
 
 **`origin` still points at `alshedivat/al-folio`.** There is no `nickduran/dynamicog.org` remote
 yet, so the repo has no off-machine copy — see §6.
@@ -86,6 +96,31 @@ yet, so the repo has no off-machine copy — see §6.
   name-only (`--ra`). Add a photo: drop a square image in `assets/img/people/` and set that
   person's `image:` field. Grad student **Jiahan (Nicole) Li** added.
 
+**Home page — redesigned in session 4 (2026-11-08)** — spec
+`docs/superpowers/specs/2026-11-08-home-page-redesign-design.md`, plan
+`docs/superpowers/plans/2026-11-08-home-page-redesign.md`.
+- Home is now the research statement: eyebrow ("DynamiCog Lab · (applied) Cognitive Dynamics and
+  Communication"), two-line headline with a gold phrase, lede, methods line, link row (email,
+  Scholar, GitHub, ORCID), one-line recruiting call, circular headshot; then **four theme rows**
+  (drawing tile 3:2 left, numeral + title + two/three sentences + project chips right).
+- **All copy is data:** hero words in `_pages/about.md` front matter (`eyebrow`, `headline`,
+  `lede`, `methods`, `recruiting`, `director`); themes in `_data/themes.yml` (title, blurb,
+  `image`, `projects` slugs). Chips resolve slugs to `_projects/` by URL; an unresolved slug emits
+  `<!-- theme-row: unresolved project slug "x" -->`.
+- **Look = "Paper"** (cream `#f6f1e7`, charcoal, gold `#c9a227` accents, links in gold-deep
+  `#8a6f12`) in light mode; **"Ink"** in dark mode (near-black, cream type, the old gold neural
+  banner returns as a full-bleed band behind the headline). Fonts **Fraunces + Inter site-wide**
+  via the Google Fonts URL in `_config.yml`. Footer is now **in-flow** (`footer_fixed: false`),
+  UT lockup left, short credit right, via `_includes/footer.liquid`.
+- The old gold banner, the two prose paragraphs, and the in-body UT lockup are gone from home.
+- **Tiles are CSS placeholders** (two charcoal bars on cream) until real drawings exist; set
+  `image: <file>` in `themes.yml` with the file in `assets/img/themes/`. Art direction lives in
+  Box `LAB-LOGISTICS/Website-Redesign/Art-Direction/`.
+- New local overrides: `_includes/footer.liquid`, `_includes/theme-row.liquid`; `_layouts/about.liquid`
+  rewritten. `.al-folio-overrides.yml` generated and committed.
+- **Checks:** `bash test/dynamicog/check-site.sh` (58 assertions against localhost:4000) and
+  `bash test/dynamicog/screenshots.sh <outdir>`.
+
 **Research page — rebuilt in session 3** (`_pages/projects.md` + `_projects/*.md`)
 - Now **three sections in this order**: Grant-Funded Projects (6) · Other Ongoing Projects (2) ·
   Previous Projects (4). Driven by `display_categories`; each project's `category` places it and
@@ -110,6 +145,11 @@ yet, so the repo has no off-machine copy — see §6.
 ## 4. TASK LIST — what's left
 
 ### A. Needs Nick's input / assets
+- [ ] **Theme drawings** — all four home tiles are CSS placeholders. Brief + style guide in Box
+      `Website-Redesign/Art-Direction/`; drop finished 3:2 files in `assets/img/themes/` and set
+      `image:` in `_data/themes.yml`.
+- [ ] **Theme wording** — titles, blurbs, headline, lede are Claude's drafts; edit `_data/themes.yml`
+      and `_pages/about.md` front matter.
 - [ ] **Human-Robot Co-Adaptation image** — currently generated filler, not a real image.
 - [ ] **UT Austin course listings** — `_pages/teaching.md` still ships the visible placeholder
       "Courses at UT Austin / _To be added._" Fill it or drop the heading.
@@ -158,6 +198,10 @@ yet, so the repo has no off-machine copy — see §6.
   field queries) if this is ever revisited. **Consequence: adding a paper to `papers.bib` does not
   update the twelve project pages.**
 - Card titles are short (`card_title`); detail pages keep the full formal title.
+- **Home page (2026-11-08):** structure "C" (one page, full-width theme rows, no click-to-expand);
+  Paper light / Ink dark; research page (grant grid) **stays** in the nav; four themes, deception
+  is a project under theme 02 not a theme; headshot stays on home; eyebrow carries the aCDC
+  expansion; Fraunces + Inter site-wide; footer in-flow; links use gold-deep in light mode.
 
 ## 6. DEPLOY checklist (nothing live yet)
 0. **Clear the §4B demo-page blocker first.** Pushing with `/cv/` serving Albert Einstein and
