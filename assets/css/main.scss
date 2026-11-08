@@ -29,6 +29,29 @@
 @use "typograms";
 
 /* -------------------------------------------------------------------------
+   DynamiCog tokens (spec §9). Light = Paper, dark = Ink.
+   ------------------------------------------------------------------------- */
+:root {
+  --dc-ground: #f6f1e7; --dc-ink: #1c1c1c; --dc-muted: #444; --dc-rule: #d9d0bd;
+  --dc-gold: #c9a227; --dc-gold-deep: #8a6f12; --dc-tile-paper: #efe8d8;
+  --dc-chip-bg: #fff; --dc-chip-border: #d9d0bd;
+  --global-bg-color: var(--dc-ground); --global-text-color: var(--dc-ink);
+  --global-theme-color: var(--dc-gold-deep); --global-hover-color: var(--dc-gold-deep);
+  --global-divider-color: var(--dc-rule); --global-card-bg-color: #fff;
+}
+html[data-theme="dark"] {
+  --dc-ground: #121212; --dc-ink: #f3ede0; --dc-muted: #cfc8b8; --dc-rule: #2c2c2c;
+  --dc-gold: #e2b73a; --dc-gold-deep: #e2b73a; --dc-tile-paper: #efe8d8;
+  --dc-chip-bg: #1e1e1e; --dc-chip-border: #3a3a3a;
+  --global-bg-color: var(--dc-ground); --global-text-color: var(--dc-ink);
+  --global-theme-color: var(--dc-gold-deep); --global-hover-color: var(--dc-gold-deep);
+  --global-divider-color: var(--dc-rule); --global-card-bg-color: #1e1e1e;
+}
+/* `html body` outranks the gem's compiled `body{font-family:Roboto}` in tailwind.css. */
+html body { font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; font-weight: 400; }
+.navbar-brand.title { font-family: Fraunces, Georgia, serif; font-weight: 800; }
+
+/* -------------------------------------------------------------------------
    DynamiCog Lab custom overrides
    ------------------------------------------------------------------------- */
 
