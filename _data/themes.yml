@@ -1,0 +1,56 @@
+# Home-page theme rows (spec §7). Display order = file order.
+# image: filename inside assets/img/themes/ (3:2). Empty string = CSS placeholder tile.
+# projects: slugs of _projects/<slug>.md, in display order. Unresolved slugs emit an
+#           HTML comment the check script catches: "theme-row: unresolved project slug".
+- slug: coordination
+  number: "01"
+  title: Communication and coordination
+  blurb: >
+    When two people talk, move, and solve problems together they start to act
+    as one system. We measure that coupling in speech, gesture, and posture,
+    and ask when it helps and when it gets in the way.
+  image: ""
+  projects:
+    - cps-coordination
+    - multimodal-coordination
+    - linguistic-concordance
+    - perspective-taking
+
+- slug: in-the-wild
+  number: "02"
+  title: Natural behavior in the wild
+  blurb: >
+    Emergency calls, patient-physician messages, classrooms, conversations with
+    a stranger. We work from recordings of behavior as it actually occurred,
+    including what people reveal when they are under pressure or holding
+    something back.
+  image: ""
+  projects:
+    - suspicion-911
+    - patient-provider-llm
+    - action-dynamics-deception
+    - language-deception
+
+- slug: computation
+  number: "03"
+  title: Computation for behavior
+  blurb: >
+    Language models, dynamical-systems methods, and recurrence analysis, built
+    to see structure in behavior that unfolds over time. Methods are a research
+    program here, not a toolbox.
+  image: ""
+  projects:
+    - semantic-models
+    - dynamic-psycholinguistics
+    - discourse-analysis
+
+- slug: people-and-machines
+  number: "04"
+  title: People and machines, adapting
+  blurb: >
+    Taking what we know about human coordination into interactions with robots
+    and language-based AI, where the partner is also learning.
+  image: ""
+  projects:
+    - robot-coadaptation
+    - patient-provider-llm

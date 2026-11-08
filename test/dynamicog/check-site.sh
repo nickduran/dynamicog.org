@@ -59,5 +59,14 @@ assert_count    "home: old banner gone"     "$BASE/" 'dynamicog-hero' 0
 assert_count    "home: old prose gone"      "$BASE/" 'biggish data' 0
 assert_count    "home: lockup not in body"  "$BASE/" 'class="ut-logo"' 0
 
+# ---- Task 4: theme rows -----------------------------------------------------
+assert_count    "themes: four rows"               "$BASE/" '<article class="dc-theme"' 4
+assert_contains "themes: titles in order"         "$BASE/" 'Communication and coordination.*Natural behavior in the wild.*Computation for behavior.*People and machines, adapting'
+assert_count    "themes: four placeholders"       "$BASE/" 'dc-tile--placeholder' 4
+assert_contains "themes: chip links to project"   "$BASE/" 'class="dc-chip" href="/projects/cps-coordination/"[^>]*>Coordination in Collaborative Problem Solving<'
+assert_count    "themes: patient-provider appears twice" "$BASE/" 'href="/projects/patient-provider-llm/"' 2
+assert_count    "themes: no unresolved slugs"     "$BASE/" 'theme-row: unresolved project slug' 0
+assert_count    "themes: 13 chips total"          "$BASE/" 'class="dc-chip"' 13
+
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

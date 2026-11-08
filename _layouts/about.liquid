@@ -59,4 +59,8 @@ layout: default
 
 {{ content }}
 
-<!-- dc-themes -->
+<section class="dc-themes">
+  {% for theme in site.data.themes %}
+    {% include theme-row.liquid theme=theme %}
+  {% endfor %}
+</section>

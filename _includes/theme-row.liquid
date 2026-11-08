@@ -1,0 +1,34 @@
+{% comment %}
+  One home-page theme row (spec §6 item 3, §7, §8). Usage:
+    {% include theme-row.liquid theme=theme %}
+  theme = one entry of _data/themes.yml. Project slugs resolve against site.projects
+  by URL ("/projects/<slug>/"); an unresolved slug emits an HTML comment on purpose
+  so the build output shows the problem instead of a silent empty chip.
+{% endcomment %}
+{% assign theme = include.theme %}
+<article class="dc-theme" id="theme-{{ theme.slug }}">
+  {% if theme.image and theme.image != "" %}
+    {% assign tile_path = theme.image | prepend: "assets/img/themes/" %}
+    {% include figure.liquid path=tile_path class="dc-tile__img" sizes="300px" alt=theme.title loading="lazy" %}
+  {% else %}
+    <div class="dc-tile dc-tile--placeholder" aria-hidden="true"></div>
+  {% endif %}
+  <div class="dc-theme__text">
+    <div class="dc-theme__num">{{ theme.number }}</div>
+    <h2 class="dc-theme__title">{{ theme.title }}</h2>
+    <p class="dc-theme__blurb">{{ theme.blurb | strip }}</p>
+    {% if theme.projects %}
+      <ul class="dc-theme__projects">
+        {% for slug in theme.projects %}
+          {% assign proj_url = "/projects/" | append: slug | append: "/" %}
+          {% assign proj = site.projects | where: "url", proj_url | first %}
+          {% if proj %}
+            <li><a class="dc-chip" href="{{ proj.url | relative_url }}">{{ proj.card_title | default: proj.title }}</a></li>
+          {% else %}
+            <!-- theme-row: unresolved project slug "{{ slug }}" -->
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</article>
