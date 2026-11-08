@@ -127,6 +127,19 @@ e9ef82b Update Google Scholar citations
 - **Checks:** `bash test/dynamicog/check-site.sh` (65 assertions against localhost:4000) and
   `bash test/dynamicog/screenshots.sh <outdir>`.
 
+**Research page — retired 2026-11-08 (Nick's call).** The home page's theme rows and project
+chips now carry the research overview; a second index of the same twelve projects was judged
+redundant. `_pages/projects.md` is a `layout: none` meta-refresh stub to `/#research` (no redirect
+plugin is configured), `nav: false`, out of the sitemap. **The twelve detail pages under
+`/projects/<slug>/` are untouched and still linked from the chips.** Chips now carry a gold ↗
+(`.dc-chip::after`). A grants page was considered and rejected (CV covers it); a "spotlight" page
+may come later when there is something to spotlight. The 2026-09-21 notes below describe the page as
+it was before retirement.
+
+**First real theme tile (2026-11-08):** `assets/img/themes/coordination.png` (1800×1200, padded to
+3:2 from a square Nano Banana generation) set on theme 01 in `_data/themes.yml`. Source and brief in
+Box `Website-Redesign/Art-Direction/`.
+
 **Research page — rebuilt in session 3** (`_pages/projects.md` + `_projects/*.md`)
 - Now **three sections in this order**: Grant-Funded Projects (6) · Other Ongoing Projects (2) ·
   Previous Projects (4). Driven by `display_categories`; each project's `category` places it and

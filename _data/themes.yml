@@ -9,7 +9,7 @@
     When two people talk, move, and solve problems together they start to act
     as one system. We measure that coupling in speech, gesture, and posture,
     and ask when it helps and when it gets in the way.
-  image: ""
+  image: "coordination.png"
   projects:
     - cps-coordination
     - multimodal-coordination

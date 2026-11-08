@@ -393,6 +393,12 @@ html[data-theme="dark"] .dc-hero__photo picture img {
   text-decoration: none;
 }
 
+/* A trailing arrow so the chips read as links (Nick, 2026-11-08). */
+.dc-chip::after {
+  content: " ↗";
+  color: var(--dc-gold);
+}
+
 .dc-chip:hover {
   border-color: var(--dc-gold);
   color: var(--dc-gold-deep);

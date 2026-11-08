@@ -68,7 +68,7 @@ assert_count    "home: lockup not in body"  "$BASE/" 'class="ut-logo"' 0
 # ---- Task 4: theme rows -----------------------------------------------------
 assert_count    "themes: four rows"               "$BASE/" '<article class="dc-theme"' 4
 assert_contains "themes: titles in order"         "$BASE/" 'Communication and coordination.*Natural behavior in the wild.*Computation for behavior.*People and machines, adapting'
-assert_count    "themes: four placeholders"       "$BASE/" 'dc-tile--placeholder' 4
+assert_count    "themes: three placeholders (01 has art)" "$BASE/" 'dc-tile--placeholder' 3
 assert_contains "themes: chip links to project"   "$BASE/" 'class="dc-chip" href="/projects/cps-coordination/"[^>]*>Coordination in Collaborative Problem Solving<'
 assert_count    "themes: patient-provider appears twice" "$BASE/" 'href="/projects/patient-provider-llm/"' 2
 assert_count    "themes: no unresolved slugs"     "$BASE/" 'theme-row: unresolved project slug' 0
@@ -82,8 +82,8 @@ assert_contains "dark: hero areas reflow"     "$BASE/assets/css/main.css" 'html\
 for pg in /projects/ /people/ /publications/ /teaching/ /get-involved/; do assert_status "$BASE$pg" 200; done
 for sl in action-dynamics-deception cps-coordination discourse-analysis dynamic-psycholinguistics language-deception linguistic-concordance multimodal-coordination patient-provider-llm perspective-taking robot-coadaptation semantic-models suspicion-911; do assert_status "$BASE/projects/$sl/" 200; done
 assert_count    "publications: 63 entries"      "$BASE/publications/" 'class="row"' 63
-assert_contains "projects: grant grid intact"   "$BASE/projects/" 'Grant-Funded Projects.*Other Ongoing Projects.*Previous Projects'
-assert_contains "nav: research link present"    "$BASE/" 'href="/projects/"[^>]*>\s*research'
+assert_contains "projects: /projects/ redirects home to #research" "$BASE/projects/" 'http-equiv="refresh"[^>]*url=/#research'
+assert_count    "nav: research link absent"      "$BASE/" 'nav-link[^>]*href="/projects/"' 0
 
 # ---- Review fixes (2026-11-08 whole-branch review) ---------------------------
 assert_contains "css: gold-deep meets AA on cream (#7f6611)" "$BASE/assets/css/main.css" '--dc-gold-deep:\s*#7f6611'
@@ -93,6 +93,13 @@ assert_contains "css: headline accent nowrap"     "$BASE/assets/css/main.css" '\
 assert_contains "css: dark band bleeds via pseudo-element, box stays in container" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band::before\s*\{[^}]*left:\s*calc\(50% - 50vw\)[^}]*right:\s*calc\(50% - 50vw\)'
 assert_cmd      "banner: left column is dark (white frame trimmed)" "docker exec dynamicogorg-jekyll-1 magick /srv/jekyll/assets/img/banner_brain.png -crop 1x631+0+0 +repage -format '%[fx:int(255*mean)<100?1:0]' info:" "1"
 assert_cmd      "banner: top row is dark (white frame trimmed)"  "docker exec dynamicogorg-jekyll-1 magick /srv/jekyll/assets/img/banner_brain.png -crop 834x1+0+0 +repage -format '%[fx:int(255*mean)<100?1:0]' info:" "1"
+
+# ---- Retire research tab, chip arrows, first real tile (2026-11-08) ---------
+assert_contains "themes: section anchored as #research" "$BASE/" '<section class="dc-themes" id="research"'
+assert_contains "css: chips carry an arrow"       "$BASE/assets/css/main.css" '\.dc-chip::after\s*\{[^}]*content:\s*"[^"]*↗'
+assert_contains "themes: coordination tile is the real drawing" "$BASE/" 'id="theme-coordination".*themes/coordination'
+assert_count    "themes: a 1800x1200 source exists" "$BASE/assets/img/themes/coordination.png" 'PNG' 1
+assert_count    "themes: coordination has no placeholder" "$BASE/" 'id="theme-coordination"[^☃]{0,400}dc-tile--placeholder' 0
 
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]
