@@ -3,94 +3,60 @@ layout: default
 ---
 
 {% comment %}
-  Local override of al_folio_core's about.liquid.
-  Only the page header is changed: the plain post-header is replaced with a
-  full-bleed hero banner (gold neural image + title/subtitle overlay) that
-  mirrors the previous WordPress home page. Everything else matches the gem.
-  Styling lives in assets/css/main.scss (.dynamicog-hero*).
+  Local override of al_folio_core's about.liquid (spec §6).
+  Home page = research statement: hero block, then theme rows from _data/themes.yml.
+  All copy comes from _pages/about.md front matter and _data/themes.yml; nothing is
+  hard-coded here. Styling: assets/css/main.scss (.dc-hero*, .dc-theme*, .dc-tile*).
+  The gem's news / latest-posts / selected-papers / social / newsletter blocks are
+  intentionally omitted: the page's flags are all false and the spec removes them.
 {% endcomment %}
 
-<div class="dynamicog-hero" style="background-image: url('{{ '/assets/img/banner_brain.png' | relative_url }}');">
-  <div class="dynamicog-hero-inner">
-    <h1 class="dynamicog-hero-title">
-      {% if site.title == 'blank' %}
-        <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }} {{ site.last_name }}
-      {% else %}
-        {{ site.title }}
+{% assign socials = site.data.socials %}
+
+<section class="dc-hero">
+  <div class="dc-hero__band">
+    <p class="dc-hero__eyebrow">
+      {{- page.eyebrow -}}
+      {%- if page.eyebrow_sub -%}
+        <span class="dc-hero__eyebrow-sep">·</span><span class="dc-hero__eyebrow-sub">{{ page.eyebrow_sub }}</span>
+      {%- endif -%}
+    </p>
+    <h1 class="dc-hero__headline">{{ page.headline }} <em class="dc-hero__accent">{{ page.headline_accent }}</em></h1>
+  </div>
+
+  <div class="dc-hero__body">
+    <p class="dc-hero__lede">{{ page.lede }}</p>
+    <p class="dc-hero__methods">{{ page.methods | join: " · " }}</p>
+    <ul class="dc-hero__links">
+      {% if socials.email %}
+        <li><a href="mailto:{{ socials.email }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Email</a></li>
       {% endif %}
-    </h1>
-    {% if page.subtitle %}
-      <p class="dynamicog-hero-subtitle">{{ page.subtitle }}</p>
+      {% if socials.scholar_userid %}
+        <li><a href="https://scholar.google.com/citations?user={{ socials.scholar_userid }}" target="_blank" rel="noopener"><i class="ai ai-google-scholar" aria-hidden="true"></i>Google Scholar</a></li>
+      {% endif %}
+      {% if socials.github_username %}
+        <li><a href="https://github.com/{{ socials.github_username }}" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a></li>
+      {% endif %}
+      {% if socials.orcid_id %}
+        <li><a href="https://orcid.org/{{ socials.orcid_id }}" target="_blank" rel="noopener"><i class="ai ai-orcid" aria-hidden="true"></i>ORCID</a></li>
+      {% endif %}
+    </ul>
+    {% if page.recruiting and page.recruiting.enabled %}
+      <p class="dc-hero__recruiting">{{ page.recruiting.text }} <a href="{{ page.recruiting.link | relative_url }}">{{ page.recruiting.link_text }}</a></p>
     {% endif %}
   </div>
-</div>
 
-<div class="post">
-  <article>
-    {% if page.profile %}
-      <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
-        {% if page.profile.image %}
-          {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
-          {% if page.profile.image_circular %}
-            {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
-          {% else %}
-            {% assign profile_image_class = 'img-fluid z-depth-1
-      rounded' %}
-          {% endif %}
-          {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px)
-      30vw, 95vw"{% endcapture %}
-          {%
-            include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
-            cache_bust=true
-          %}
-        {% endif %}
-        {% if page.profile.more_info %}
-          <div class="more-info">{{ page.profile.more_info }}</div>
-        {% endif %}
-      </div>
+  <div class="dc-hero__photo">
+    {% if page.profile and page.profile.image %}
+      {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
+      {% include figure.liquid loading="eager" path=profile_image_path class="dc-hero__img" alt="Nick Duran" cache_bust=true %}
     {% endif %}
-
-    <div class="clearfix">{{ content }}</div>
-
-    <!-- News -->
-    {% if page.announcements and page.announcements.enabled %}
-      <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
-      </h2>
-      {% include news.liquid limit=true %}
+    {% if page.director %}
+      <p class="dc-hero__director">{{ page.director | join: "<br>" }}</p>
     {% endif %}
+  </div>
+</section>
 
-    <!-- Latest posts -->
-    {% if page.latest_posts and page.latest_posts.enabled %}
-      <h2>
-        <a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a>
-      </h2>
-      {% include latest_posts.liquid %}
-    {% endif %}
+{{ content }}
 
-    <!-- Selected papers -->
-    {% if page.selected_papers %}
-      <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
-      </h2>
-      {% include selected_papers.liquid %}
-    {% endif %}
-
-    <!-- Social -->
-    {% if page.social %}
-      <div class="social">
-        <div class="contact-icons">{% social_links %}</div>
-
-        <div class="contact-note">{{ site.contact_note }}</div>
-      </div>
-    {% endif %}
-
-    {% if site.newsletter and site.newsletter.enabled and site.footer_fixed %}
-      {% if site.plugins contains 'al_newsletter' %}
-        {% include plugins/al_newsletter_form_center_margin.liquid %}
-      {% else %}
-        {% include newsletter.liquid center=true %}
-      {% endif %}
-    {% endif %}
-  </article>
-</div>
+<!-- dc-themes -->

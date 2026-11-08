@@ -42,5 +42,22 @@ assert_count    "footer: no Jekyll/GitHub Pages credit" "$BASE/" 'Powered by' 0
 assert_contains "footer: also on publications" "$BASE/publications/" '<footer class="dc-footer"'
 assert_contains "dark: lockup inverted"       "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-footer__lockup\s*\{[^}]*invert'
 
+# ---- Task 3: hero -----------------------------------------------------------
+assert_contains "hero: eyebrow name"        "$BASE/" 'dc-hero__eyebrow[^<]*DynamiCog Lab'
+assert_contains "hero: eyebrow aCDC"        "$BASE/" 'dc-hero__eyebrow-sub[^<]*\(applied\) Cognitive Dynamics and Communication'
+assert_contains "hero: headline accent"     "$BASE/" '<em class="dc-hero__accent">as it happens\.</em>'
+assert_contains "hero: methods line"        "$BASE/" 'dc-hero__methods[^<]*Movement tracking · Conversation analysis · Language models · Dynamical systems'
+assert_contains "hero: scholar link"        "$BASE/" 'href="https://scholar\.google\.com/citations\?user=dU26pfIAAAAJ"'
+assert_contains "hero: github link"         "$BASE/" 'href="https://github\.com/nickduran"'
+assert_contains "hero: orcid link"          "$BASE/" 'href="https://orcid\.org/0000-0002-8872-5617"'
+assert_contains "hero: email link"          "$BASE/" 'href="mailto:nicholas\.duran@utexas\.edu"'
+assert_count    "hero: no RSS icon"         "$BASE/" 'fa-(square-)?rss' 0
+assert_count    "home: gem social block gone" "$BASE/" 'class="contact-icons"' 0
+assert_contains "hero: recruiting line"     "$BASE/" 'dc-hero__recruiting.*href="/get-involved/"'
+assert_contains "hero: photo"               "$BASE/" 'dc-hero__photo.*prof_pic'
+assert_count    "home: old banner gone"     "$BASE/" 'dynamicog-hero' 0
+assert_count    "home: old prose gone"      "$BASE/" 'biggish data' 0
+assert_count    "home: lockup not in body"  "$BASE/" 'class="ut-logo"' 0
+
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]
