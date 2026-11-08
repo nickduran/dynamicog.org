@@ -1,0 +1,15 @@
+{% comment %}
+  Local override of al_folio_core's footer.liquid (spec §6 item 4).
+  In-flow footer: UT Psychology lockup at left, "© year + site.footer_text" at right.
+  The credit wording lives in _config.yml (footer_text); the lockup path is fixed here.
+  The gem's newsletter and impressum branches are intentionally dropped (unused on this site).
+{% endcomment %}
+<footer class="dc-footer" role="contentinfo">
+  <div class="container dc-footer__inner">
+    <img
+      class="dc-footer__lockup"
+      src="{{ '/assets/img/ut_psychology_logo.png' | relative_url }}"
+      alt="The University of Texas at Austin, Department of Psychology, College of Liberal Arts" />
+    <span class="dc-footer__text">&copy; {{ site.time | date: '%Y' }} {{ site.footer_text }}</span>
+  </div>
+</footer>

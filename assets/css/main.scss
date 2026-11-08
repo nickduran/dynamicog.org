@@ -226,18 +226,44 @@ body {
   margin-bottom: 1.25rem;
 }
 
-/* UT / Department of Psychology lockup at the top of the home body. */
-.ut-logo {
-  display: block;
-  width: 100%;
-  max-width: 460px;
-  height: auto;
-  margin: 0 0 1.5rem;
+/* -------------------------------------------------------------------------
+   Footer (spec §6 item 4): in-flow, gold rule, UT lockup left, credit right.
+   Rendered by the local _includes/footer.liquid override.
+   ------------------------------------------------------------------------- */
+.dc-footer {
+  border-top: 2px solid var(--dc-gold);
+  margin-top: 3rem;
+  padding: 1.4rem 0 1.6rem;
+  font-size: 12px;
+  color: var(--dc-muted);
 }
 
-/* The lockup uses dark navy text; give it a light backing in dark mode. */
-html[data-theme="dark"] .ut-logo {
-  background: #fff;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
+.dc-footer__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dc-footer__lockup {
+  height: 34px;
+  width: auto;
+}
+
+.dc-footer a {
+  color: var(--dc-gold-deep);
+}
+
+/* The lockup is navy on transparent; flip it to cream on the dark ground. */
+html[data-theme="dark"] .dc-footer__lockup {
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+
+@media (max-width: 575px) {
+  .dc-footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
 }

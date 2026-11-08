@@ -34,5 +34,13 @@ assert_contains "css: theme color is gold-deep" "$BASE/assets/css/main.css" '--g
 assert_contains "css: body font Inter"          "$BASE/assets/css/main.css" 'html body\s*\{\s*font-family:\s*Inter'
 assert_contains "css: brand font Fraunces"      "$BASE/assets/css/main.css" '\.navbar-brand\.title\s*\{\s*font-family:\s*Fraunces'
 
+# ---- Task 2: footer ---------------------------------------------------------
+assert_contains "footer: dc-footer present"   "$BASE/" '<footer class="dc-footer"'
+assert_contains "footer: UT lockup"           "$BASE/" 'dc-footer__lockup[^>]*ut_psychology_logo\.png'
+assert_contains "footer: credit line"         "$BASE/" 'Nick D\. Duran · DynamiCog Lab · Built with'
+assert_count    "footer: no Jekyll/GitHub Pages credit" "$BASE/" 'Powered by' 0
+assert_contains "footer: also on publications" "$BASE/publications/" '<footer class="dc-footer"'
+assert_contains "dark: lockup inverted"       "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-footer__lockup\s*\{[^}]*invert'
+
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]
