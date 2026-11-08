@@ -68,5 +68,9 @@ assert_count    "themes: patient-provider appears twice" "$BASE/" 'href="/projec
 assert_count    "themes: no unresolved slugs"     "$BASE/" 'theme-row: unresolved project slug' 0
 assert_count    "themes: 13 chips total"          "$BASE/" 'class="dc-chip"' 13
 
+# ---- Task 5: dark mode (Ink) ------------------------------------------------
+assert_contains "dark: band has banner image" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band\s*\{[^}]*banner_brain\.png'
+assert_contains "dark: hero areas reflow"     "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero\s*\{[^}]*grid-template-areas:\s*"band band"'
+
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

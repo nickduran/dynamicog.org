@@ -223,6 +223,57 @@ body {
 }
 
 /* -------------------------------------------------------------------------
+   Dark mode (Ink), spec §6 "Dark mode": the band carries the gold neural
+   banner full-bleed behind the eyebrow + headline; body and photo sit below.
+   Single DOM; only the grid areas and the band background change.
+   ------------------------------------------------------------------------- */
+html[data-theme="dark"] .dc-hero {
+  grid-template-areas:
+    "band band"
+    "body photo";
+  padding-top: 0;
+}
+
+html[data-theme="dark"] .dc-hero__band {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: -3rem; /* cancel the gem's .container.mt-5 so the band is flush under the navbar */
+  padding: 150px 20px 30px;
+  background:
+    linear-gradient(90deg, rgba(18, 18, 18, 0.92) 0%, rgba(18, 18, 18, 0.55) 55%, rgba(18, 18, 18, 0.2) 100%),
+    url("{{ '/assets/img/banner_brain.png' | relative_url }}") center 40% / cover no-repeat;
+}
+
+html[data-theme="dark"] .dc-hero__band > * {
+  max-width: var(--global-max-width, 930px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+html[data-theme="dark"] .dc-hero__body,
+html[data-theme="dark"] .dc-hero__photo {
+  padding-top: 28px;
+}
+
+html[data-theme="dark"] .dc-hero__photo .dc-hero__img,
+html[data-theme="dark"] .dc-hero__photo picture img {
+  border-color: #121212;
+}
+
+@media (max-width: 767px) {
+  html[data-theme="dark"] .dc-hero {
+    grid-template-areas:
+      "band"
+      "photo"
+      "body";
+  }
+
+  html[data-theme="dark"] .dc-hero__band {
+    padding-top: 90px;
+  }
+}
+
+/* -------------------------------------------------------------------------
    Home theme rows (spec §6 item 3, §8). Tile left (3:2), text right.
    Rendered by _includes/theme-row.liquid from _data/themes.yml.
    ------------------------------------------------------------------------- */
