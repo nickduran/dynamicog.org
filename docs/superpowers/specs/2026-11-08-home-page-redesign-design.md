@@ -127,13 +127,13 @@ Define once in `main.scss` as CSS custom properties, light and dark:
 | muted text | `#444` | `#cfc8b8` |
 | rule | `#d9d0bd` | `#2c2c2c` |
 | gold | `#c9a227` | `#e2b73a` |
-| gold-deep (small caps) | `#8a6f12` | `#e2b73a` |
+| gold-deep (small caps, links) | `#7f6611` | `#e2b73a` |
 | tile paper | `#efe8d8` | `#efe8d8` |
 | chip bg / border | `#fff` / `#d9d0bd` | `#1e1e1e` / `#3a3a3a` |
 
 Type: display `Fraunces` (weights 600, 800, optical size axis), text `Inter` (400, 500, 700), **site-wide**, replacing Roboto everywhere so the nav, publications, people, and project pages share one body face with the home page. Load by replacing the Google Fonts URL at `third_party_libraries.google_fonts.url.fonts` in `_config.yml` (keep Material Icons in it). Fallbacks: Georgia/serif and system sans. Override the gem's `body { font-family: Roboto }` from the compiled Tailwind CSS in `main.scss`.
 
-al-folio's theme color (`$purple-color` / `$cyan-color` in the gem's variables, overridden in `main.scss`) becomes **gold-deep `#8a6f12` in light mode** and `#e2b73a` in dark mode. That variable colors every body link and the publication buttons; bright gold on cream is about 2.2:1 contrast and fails for text, gold-deep is about 5:1. Bright gold `#c9a227` is reserved for rules, numerals, the headshot ring, and the headline phrase.
+al-folio's theme color (`$purple-color` / `$cyan-color` in the gem's variables, overridden in `main.scss`) becomes **gold-deep `#7f6611` in light mode** and `#e2b73a` in dark mode. That variable colors every body link and the publication buttons; bright gold on cream is about 2.2:1 contrast and fails for text, gold-deep is 4.89:1 on the cream ground (the earlier `#8a6f12` measured 4.28:1 on cream, below AA; review fix 2026-11-08). Bright gold `#c9a227` is reserved for rules, numerals, the headshot ring, and the headline phrase.
 
 The ground color applies to the whole site in both modes, not just the home page, so that navigating to publications does not snap from cream to white. Verify the publications and people pages still read well on cream; if a component fights it, fix the component rather than reverting the ground.
 

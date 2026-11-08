@@ -118,7 +118,7 @@ yet, so the repo has no off-machine copy — see §6.
   Box `LAB-LOGISTICS/Website-Redesign/Art-Direction/`.
 - New local overrides: `_includes/footer.liquid`, `_includes/theme-row.liquid`; `_layouts/about.liquid`
   rewritten. `.al-folio-overrides.yml` generated and committed.
-- **Checks:** `bash test/dynamicog/check-site.sh` (58 assertions against localhost:4000) and
+- **Checks:** `bash test/dynamicog/check-site.sh` (65 assertions against localhost:4000) and
   `bash test/dynamicog/screenshots.sh <outdir>`.
 
 **Research page — rebuilt in session 3** (`_pages/projects.md` + `_projects/*.md`)

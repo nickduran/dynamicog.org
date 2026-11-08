@@ -24,6 +24,12 @@ assert_count() { # name url pattern expected
   else FAIL=$((FAIL+1)); echo "FAIL $1 (want $4, got $got)"; fi
 }
 
+assert_cmd() { # name command expected-stdout
+  local got; got=$(bash -c "$2" 2>/dev/null | tr -d '[:space:]')
+  if [ "$got" = "$3" ]; then PASS=$((PASS+1)); echo "ok   $1 ($got)"
+  else FAIL=$((FAIL+1)); echo "FAIL $1 (want $3, got $got)"; fi
+}
+
 # ---- Task 1: fonts, tokens, ground -----------------------------------------
 assert_status   "$BASE/" 200
 assert_contains "fonts: Fraunces+Inter in head" "$BASE/" 'fonts\.googleapis\.com/css2\?family=Fraunces.*Inter'
@@ -46,7 +52,7 @@ assert_contains "dark: lockup inverted"       "$BASE/assets/css/main.css" 'html\
 assert_contains "hero: eyebrow name"        "$BASE/" 'dc-hero__eyebrow[^<]*DynamiCog Lab'
 assert_contains "hero: eyebrow aCDC"        "$BASE/" 'dc-hero__eyebrow-sub[^<]*\(applied\) Cognitive Dynamics and Communication'
 assert_contains "hero: headline accent"     "$BASE/" '<em class="dc-hero__accent">as it happens\.</em>'
-assert_contains "hero: methods line"        "$BASE/" 'dc-hero__methods[^<]*Movement tracking · Conversation analysis · Language models · Dynamical systems'
+assert_contains "hero: methods line"        "$BASE/" 'dc-hero__methods.*Movement tracking</span>.* · .*Conversation analysis</span>.* · .*Language models</span>.* · .*Dynamical systems</span>'
 assert_contains "hero: scholar link"        "$BASE/" 'href="https://scholar\.google\.com/citations\?user=dU26pfIAAAAJ"'
 assert_contains "hero: github link"         "$BASE/" 'href="https://github\.com/nickduran"'
 assert_contains "hero: orcid link"          "$BASE/" 'href="https://orcid\.org/0000-0002-8872-5617"'
@@ -69,7 +75,7 @@ assert_count    "themes: no unresolved slugs"     "$BASE/" 'theme-row: unresolve
 assert_count    "themes: 13 chips total"          "$BASE/" 'class="dc-chip"' 13
 
 # ---- Task 5: dark mode (Ink) ------------------------------------------------
-assert_contains "dark: band has banner image" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band\s*\{[^}]*banner_brain\.png'
+assert_contains "dark: band has banner image" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band::before\s*\{[^}]*banner_brain\.png'
 assert_contains "dark: hero areas reflow"     "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero\s*\{[^}]*grid-template-areas:\s*"band band"'
 
 # ---- Task 7: regression on other pages --------------------------------------
@@ -78,6 +84,15 @@ for sl in action-dynamics-deception cps-coordination discourse-analysis dynamic-
 assert_count    "publications: 63 entries"      "$BASE/publications/" 'class="row"' 63
 assert_contains "projects: grant grid intact"   "$BASE/projects/" 'Grant-Funded Projects.*Other Ongoing Projects.*Previous Projects'
 assert_contains "nav: research link present"    "$BASE/" 'href="/projects/"[^>]*>\s*research'
+
+# ---- Review fixes (2026-11-08 whole-branch review) ---------------------------
+assert_contains "css: gold-deep meets AA on cream (#7f6611)" "$BASE/assets/css/main.css" '--dc-gold-deep:\s*#7f6611'
+assert_count    "hero: four nowrap method spans"  "$BASE/" '<span class="dc-hero__method">' 4
+assert_contains "css: method spans nowrap"        "$BASE/assets/css/main.css" '\.dc-hero__method\s*\{[^}]*white-space:\s*nowrap'
+assert_contains "css: headline accent nowrap"     "$BASE/assets/css/main.css" '\.dc-hero__accent\s*\{[^}]*white-space:\s*nowrap'
+assert_contains "css: dark band bleeds via pseudo-element, box stays in container" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band::before\s*\{[^}]*left:\s*calc\(50% - 50vw\)[^}]*right:\s*calc\(50% - 50vw\)'
+assert_cmd      "banner: left column is dark (white frame trimmed)" "docker exec dynamicogorg-jekyll-1 magick /srv/jekyll/assets/img/banner_brain.png -crop 1x631+0+0 +repage -format '%[fx:int(255*mean)<100?1:0]' info:" "1"
+assert_cmd      "banner: top row is dark (white frame trimmed)"  "docker exec dynamicogorg-jekyll-1 magick /srv/jekyll/assets/img/banner_brain.png -crop 834x1+0+0 +repage -format '%[fx:int(255*mean)<100?1:0]' info:" "1"
 
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

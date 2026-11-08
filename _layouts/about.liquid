@@ -5,8 +5,8 @@ layout: default
 {% comment %}
   Local override of al_folio_core's about.liquid (spec §6).
   Home page = research statement: hero block, then theme rows from _data/themes.yml.
-  All copy comes from _pages/about.md front matter and _data/themes.yml; nothing is
-  hard-coded here. Styling: assets/css/main.scss (.dc-hero*, .dc-theme*, .dc-tile*).
+  All copy comes from _pages/about.md front matter and _data/themes.yml; only the
+  link-row labels and the headshot alt text are literal here. Styling: assets/css/main.scss (.dc-hero*, .dc-theme*, .dc-tile*).
   The gem's news / latest-posts / selected-papers / social / newsletter blocks are
   intentionally omitted: the page's flags are all false and the spec removes them.
 {% endcomment %}
@@ -26,7 +26,7 @@ layout: default
 
   <div class="dc-hero__body">
     <p class="dc-hero__lede">{{ page.lede }}</p>
-    <p class="dc-hero__methods">{{ page.methods | join: " · " }}</p>
+    <p class="dc-hero__methods">{% for m in page.methods %}<span class="dc-hero__method">{{ m }}</span>{% unless forloop.last %}<span class="dc-hero__sep"> · </span>{% endunless %}{% endfor %}</p>
     <ul class="dc-hero__links">
       {% if socials.email %}
         <li><a href="mailto:{{ socials.email }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Email</a></li>

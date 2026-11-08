@@ -33,7 +33,7 @@
    ------------------------------------------------------------------------- */
 :root {
   --dc-ground: #f6f1e7; --dc-ink: #1c1c1c; --dc-muted: #444; --dc-rule: #d9d0bd;
-  --dc-gold: #c9a227; --dc-gold-deep: #8a6f12; --dc-tile-paper: #efe8d8;
+  --dc-gold: #c9a227; --dc-gold-deep: #7f6611; --dc-tile-paper: #efe8d8; /* gold-deep: 4.89:1 on cream (AA) */
   --dc-chip-bg: #fff; --dc-chip-border: #d9d0bd;
   --global-bg-color: var(--dc-ground); --global-text-color: var(--dc-ink);
   --global-theme-color: var(--dc-gold-deep); --global-hover-color: var(--dc-gold-deep);
@@ -133,6 +133,7 @@ body {
 .dc-hero__accent {
   font-style: normal;
   color: var(--dc-gold);
+  white-space: nowrap; /* never split the gold phrase across lines */
 }
 
 .dc-hero__lede {
@@ -140,6 +141,10 @@ body {
   max-width: 620px;
   font-size: 17px;
   line-height: 1.5;
+}
+
+.dc-hero__method {
+  white-space: nowrap; /* a two-word method never breaks into two "methods" */
 }
 
 .dc-hero__methods {
@@ -235,19 +240,26 @@ html[data-theme="dark"] .dc-hero {
 }
 
 html[data-theme="dark"] .dc-hero__band {
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  position: relative;
+  z-index: 0;
   margin-top: -3rem; /* cancel the gem's .container.mt-5 so the band is flush under the navbar */
-  padding: 150px 20px 30px;
+  padding: 150px 0 30px;
+}
+
+/* The background bleeds to the viewport edges on a pseudo-element, so the band's own box
+   (and therefore the eyebrow and headline) stays aligned with the container text below.
+   A negative-margin bleed on the box itself would shift the text by half a scrollbar. */
+html[data-theme="dark"] .dc-hero__band::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  z-index: -1;
   background:
     linear-gradient(90deg, rgba(18, 18, 18, 0.92) 0%, rgba(18, 18, 18, 0.55) 55%, rgba(18, 18, 18, 0.2) 100%),
     url("{{ '/assets/img/banner_brain.png' | relative_url }}") center 40% / cover no-repeat;
-}
-
-html[data-theme="dark"] .dc-hero__band > * {
-  max-width: var(--global-max-width, 930px);
-  margin-left: auto;
-  margin-right: auto;
 }
 
 html[data-theme="dark"] .dc-hero__body,
