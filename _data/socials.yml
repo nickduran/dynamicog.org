@@ -5,5 +5,5 @@ email: nicholas.duran@utexas.edu # your email address
 scholar_userid: dU26pfIAAAAJ # Google Scholar user id (from ...citations?user=THIS_PART)
 github_username: nickduran # your GitHub username
 orcid_id: 0000-0002-8872-5617 # your ORCID id
-rss_icon: true # comment this line to hide the RSS icon
+# rss_icon: true # comment this line to hide the RSS icon
 # osf_id: # OSF id intentionally omitted

@@ -13,8 +13,14 @@ director:
     and research affiliate at University College London.
   links:
     email: nicholas.duran@utexas.edu
-    scholar: ""
+    scholar: https://scholar.google.com/citations?user=dU26pfIAAAAJ
     github: https://github.com/nickduran
+
+# Lab staff
+lab_manager:
+  - name: Farhana Anisha
+    role: Lab Manager
+    image: # e.g. farhana_anisha.jpg — add to assets/img/people/
 
 # Current graduate students (fill in as you recruit at UT).
 # To add a photo: drop a square-ish image in assets/img/people/ and set `image:`
@@ -24,7 +30,7 @@ grad_students:
     role: Graduate Student
     image: # e.g. jiahan_li.jpg — add to assets/img/people/
 
-# Current undergraduate research assistants (Spring/Summer 2026)
+# Current undergraduate research assistants (Fall 2026)
 research_assistants:
   - name: Samantha Slogoff
   - name: Annabelle Deason
@@ -32,7 +38,6 @@ research_assistants:
   - name: Niyati Naveen Nair
   - name: Madison Jaques
   - name: Judah Castillo
-  - name: Natalie Liu
   - name: Samantha Lee
   - name: Rebekah King
 

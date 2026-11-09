@@ -11,10 +11,31 @@ nav_order: 2
 
 ## Lab Director
 
-**{{ p.director.name }}** — {{ p.director.role }}
+**{{ p.director.name }}**, {{ p.director.role }}
+
 {{ p.director.bio }}
 
 ---
+
+{% if p.lab_manager and p.lab_manager.size > 0 %}
+## Lab Manager
+
+<div class="people-grid people-grid--grad">
+{% for s in p.lab_manager %}
+  <div class="person-card">
+    {% if s.image %}
+      <img class="person-photo" src="{{ s.image | prepend: 'assets/img/people/' | relative_url }}" alt="{{ s.name }}" />
+    {% else %}
+      <div class="person-photo person-photo--placeholder" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
+    {% endif %}
+    <div class="person-info">
+      <span class="person-name">{{ s.name }}</span>
+      {% if s.role %}<span class="person-role">{{ s.role }}</span>{% endif %}
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
 
 ## Graduate Students
 

@@ -38,7 +38,7 @@
     Language models, dynamical-systems methods, and recurrence analysis, built
     to see structure in behavior that unfolds over time. Methods are a research
     program here, not a toolbox.
-  image: ""
+  image: "computation.png"
   projects:
     - semantic-models
     - dynamic-psycholinguistics

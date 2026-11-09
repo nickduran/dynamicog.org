@@ -539,3 +539,16 @@ html[data-theme="dark"] .dc-footer__lockup {
     gap: 0.6rem;
   }
 }
+
+/* Teaching page: earlier (ASU) courses, deliberately small and quiet at the bottom */
+.teaching-archive {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  h4 {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+  }
+  ul {
+    padding-left: 1.1rem;
+  }
+}

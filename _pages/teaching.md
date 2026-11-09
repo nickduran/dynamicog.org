@@ -2,44 +2,43 @@
 layout: page
 title: teaching
 permalink: /teaching/
-description: Courses taught at UT Austin and Arizona State University.
+description: Courses taught at UT Austin.
 nav: true
 nav_order: 4
 ---
 
-## Courses at UT Austin
+## Foundations of Psychological Data Science (UT Austin)
 
-_To be added._ <!-- Fill in current UT course listings. -->
+A two-course undergraduate sequence in the Department of Psychology that teaches data science
+for psychological and brain science in Python, using Jupyter notebooks and real datasets.
 
-## Courses at Arizona State University (archive)
+### PSY 371E · Foundations of Psychological Data Science I
+Students learn to load, clean, reshape, and visualize data with pandas and
+seaborn, then move from description to modeling: distributions, correlation, simple and multiple
+regression, and confounding (including Simpson's paradox). Each module pairs a guided tutorial
+with mini-projects on real data, from film representation to concussion and reaction time. The
+course ends with an individual project: a pitched and peer-reviewed proposal, a final analysis
+notebook, and a presentation.
 
-### Behavioral Data Science I
-Introduces social and behavioral scientists to modern data science using R — data
-analysis, visualization, collection, cleaning, statistical modeling, and communication.
-No prior computing or statistics required. Students learn to manipulate and transform
-data, recode variables, and understand data structures in R; develop critical thinking
-to evaluate data, identify biases, and build visualizations; and cover debugging, code
-organization, documentation, and reproducible analysis with R Markdown. Advanced topics
-include complex visualizations, causal reasoning, and fitting linear models, culminating
-in the tidymodels framework and an individual data science project (proposal, in-class
-pitches, peer review, and a final R Markdown document).
+### PSY 371F · Foundations of Psychological Data Science II
+A flipped, hands-on course that builds on FDS I toward the tools of working data
+science: Python fundamentals (functions, loops, objects), NumPy, pandas, and multi-panel figures;
+Git and GitHub for version control and collaboration; simulation as a way to reason about
+statistics; regression, introductory machine learning, and time-series analysis. Students also
+practice using AI coding tools deliberately, with attention to verification and attribution, and
+finish with a final project kept on GitHub and presented live to a mixed audience.
 
-### Cognitive Science
-Explores historical and current arguments for how the mind works, integrating theories
-from philosophy, computer science, anthropology, and neuroscience — alongside psychology.
-A "big picture" course on questions of mind, brain, and culture across levels of analysis,
-organized around the framework of "mind as information-processor," from algorithmic
-computation over discrete mental states, to distributed processing over environmental
-regularities, to dynamical systems and embodied cognition — and their relevance to
-learning, AI, decision-making, and consciousness.
+---
 
-### Language & Social Interaction
-Examines the nature of language from a psychological perspective, expanding beyond the
-individual mind to how language lives in its natural environment: social interaction and
-dialogue. Draws on psychology, linguistics, communication theory, and neuroscience to
-cover how language coordinates action in the real world, how we spontaneously converge on
-others' linguistic and speech patterns, how beliefs about what another knows shape our
-words and understanding, how brain patterns synchronize during conversation, and how
-interpersonal interaction influences deception.
+<div class="teaching-archive" markdown="1">
 
-<!-- Add graduate courses / seminars here as needed. -->
+#### Earlier courses (Arizona State University)
+
+- **Behavioral Data Science I.** Data science for social and behavioral scientists in R, from
+  wrangling and visualization to linear models and tidymodels.
+- **Cognitive Science.** How the mind works, across philosophy, computer science, anthropology,
+  neuroscience, and psychology.
+- **Language & Social Interaction.** Language in its natural environment: dialogue, convergence,
+  perspective-taking, and deception.
+
+</div>
