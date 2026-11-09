@@ -111,9 +111,11 @@ Whether `d5ff165` and the handoff commit after it are pushed: check `git status 
   headline). Fraunces + Inter site-wide. Footer in-flow, UT lockup left, short credit right
   (`_includes/footer.liquid`).
 - **Theme tiles: three of four are real drawings** (each 1800×1200, square Nano Banana source
-  padded to 3:2 by stretching only clean paper margins):
-  01 `coordination.png`, 02 `in-the-wild.png`, 03 `computation.png` (abstract charcoal lattice,
-  one gold stroke; added session 5). **04 people-and-machines is still the CSS placeholder.**
+  padded to 3:2 by stretching only clean paper margins, or center-cropped when wider than 3:2):
+  01 `coordination.png` (replaced session 5 with a landscape source, two figures joined by
+  tangled charcoal and gold lines; center-cropped to 3:2, no padding; v1 kept in
+  `Art-Direction/generated/superseded/`), 02 `in-the-wild.png`, 03 `computation.png` (abstract
+  charcoal lattice, one gold stroke; added session 5). **04 people-and-machines is still the CSS placeholder.**
 
 **People page** (`_pages/people.md` + `_data/people.yml`)
 - Sections: Lab Director · **Lab Manager (Farhana Anisha, added session 5)** · Graduate Students
