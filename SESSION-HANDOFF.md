@@ -113,7 +113,8 @@ Whether `d5ff165` and the handoff commit after it are pushed: check `git status 
 - **Theme tiles: all four are real drawings** (each 1800×1200, square Nano Banana source
   padded to 3:2 by stretching only clean paper margins, or center-cropped when wider than 3:2):
   01 `coordination.png` (replaced session 5 with a landscape source, two figures joined by
-  tangled charcoal and gold lines; center-cropped to 3:2, no padding; v1 kept in
+  tangled charcoal and gold lines; full width kept for side space, top extended with mirror-tiled
+  paper to reach 3:2; v1 kept in
   `Art-Direction/generated/superseded/`), 02 `in-the-wild.png`, 03 `computation.png` (abstract
   charcoal lattice, one gold stroke; added session 5), 04 `people-and-machines.png` (overhead person
   and robot passing through a gap in a wall; source was a photographed sheet, so it is cropped inside
@@ -223,3 +224,5 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
   (`docker exec dynamicogorg-jekyll-1 magick ...`); the repo is bind-mounted at `/srv/jekyll`.
   For tiles, check which margin columns are truly clean before stretching (`-format
   "%[fx:minima]"` on narrow crops); stray charcoal near the art streaks when stretched.
+  Stretching a thin strip more than ~4x shows streaks; mirror-tiling the strip (alternate
+  `-flip`/`-flop`, original copy adjacent to the art) looks continuous.
