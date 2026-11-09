@@ -50,7 +50,7 @@
   blurb: >
     Taking what we know about human coordination into interactions with robots
     and language-based AI, where the partner is also learning.
-  image: ""
+  image: "people-and-machines.png"
   projects:
     - robot-coadaptation
     - patient-provider-llm

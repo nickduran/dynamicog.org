@@ -68,7 +68,7 @@ assert_count    "home: lockup not in body"  "$BASE/" 'class="ut-logo"' 0
 # ---- Task 4: theme rows -----------------------------------------------------
 assert_count    "themes: four rows"               "$BASE/" '<article class="dc-theme"' 4
 assert_contains "themes: titles in order"         "$BASE/" 'Communication and coordination.*Natural behavior in the wild.*Computation for behavior.*People and machines, adapting'
-assert_count    "themes: one placeholder (01-03 have art)" "$BASE/" 'dc-tile--placeholder' 1
+assert_count    "themes: no placeholders (all four have art)" "$BASE/" 'dc-tile--placeholder' 0
 assert_contains "themes: chip links to project"   "$BASE/" 'class="dc-chip" href="/projects/cps-coordination/"[^>]*>Coordination in Collaborative Problem Solving<'
 assert_count    "themes: patient-provider appears twice" "$BASE/" 'href="/projects/patient-provider-llm/"' 2
 assert_count    "themes: no unresolved slugs"     "$BASE/" 'theme-row: unresolved project slug' 0
@@ -106,6 +106,8 @@ assert_count    "themes: in-the-wild source exists" "$BASE/assets/img/themes/in-
 
 assert_contains "themes: computation tile is the real drawing" "$BASE/" 'id="theme-computation".*themes/computation'
 assert_count    "themes: computation source exists" "$BASE/assets/img/themes/computation.png" 'PNG' 1
+assert_contains "themes: people-and-machines tile is the real drawing" "$BASE/" 'id="theme-people-and-machines".*themes/people-and-machines'
+assert_count    "themes: people-and-machines source exists" "$BASE/assets/img/themes/people-and-machines.png" 'PNG' 1
 
 # ---- Launch blocker: al-folio demo content gone (2026-11-08) ----------------
 for u in cv books repositories blog; do assert_status "$BASE/$u/" 404; done

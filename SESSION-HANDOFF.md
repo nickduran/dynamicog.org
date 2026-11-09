@@ -110,12 +110,14 @@ Whether `d5ff165` and the handoff commit after it are pushed: check `git status 
   "Ink" dark (near-black, cream type, the gold neural banner as a full-bleed band behind the
   headline). Fraunces + Inter site-wide. Footer in-flow, UT lockup left, short credit right
   (`_includes/footer.liquid`).
-- **Theme tiles: three of four are real drawings** (each 1800×1200, square Nano Banana source
+- **Theme tiles: all four are real drawings** (each 1800×1200, square Nano Banana source
   padded to 3:2 by stretching only clean paper margins, or center-cropped when wider than 3:2):
   01 `coordination.png` (replaced session 5 with a landscape source, two figures joined by
   tangled charcoal and gold lines; center-cropped to 3:2, no padding; v1 kept in
   `Art-Direction/generated/superseded/`), 02 `in-the-wild.png`, 03 `computation.png` (abstract
-  charcoal lattice, one gold stroke; added session 5). **04 people-and-machines is still the CSS placeholder.**
+  charcoal lattice, one gold stroke; added session 5), 04 `people-and-machines.png` (overhead person
+  and robot passing through a gap in a wall; source was a photographed sheet, so it is cropped inside
+  the paper; added session 5). Sources and provenance notes in `Art-Direction/generated/`.
 
 **People page** (`_pages/people.md` + `_data/people.yml`)
 - Sections: Lab Director · **Lab Manager (Farhana Anisha, added session 5)** · Graduate Students
@@ -146,8 +148,6 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 ## 4. TASK LIST — what's left
 
 ### A. Needs Nick's input / assets
-- [ ] **Theme 04 drawing** (People and machines, adapting): still a CSS placeholder. There is no
-      art brief for it. Drop a square source in Downloads and say so; Claude pads it to 3:2.
 - [ ] **Theme wording**: titles, blurbs, headline, lede are Claude's drafts; edit `_data/themes.yml`
       and `_pages/about.md` front matter.
 - [ ] **Review session-5 copy**: teaching descriptions and the Get Involved NBC paragraph are
