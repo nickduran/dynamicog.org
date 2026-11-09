@@ -1,26 +1,36 @@
 # DynamiCog site — session handoff & task list
 
-**Last updated 2026-11-08 (end of session 4: home-page redesign).** Goal: finish the al-folio site and
-launch `dynamicog.org` on GitHub Pages. Nothing is live yet — the old WordPress site is
-still up. This file is the single "fire right up" doc: current state, what's left, and how
-to deploy. Background (optional): `MIGRATION-PLAN.md`, `dynamicog-site/README.md`.
+**Last updated 2026-11-08 (end of session 5: launch-blocker cleanup, theme 03 tile, teaching and
+Get Involved copy).** Goal: finish the al-folio site and launch `dynamicog.org` on GitHub Pages.
+Nothing is live yet; the old WordPress site is still up. This file is the single "fire right up"
+doc: current state, what's left, and how to deploy. Background (optional): `MIGRATION-PLAN.md`,
+`dynamicog-site/README.md`.
 
-**To resume:** start Docker, `cd ~/dev/dynamicog.org && docker compose up -d`, open
-http://localhost:4000/, then work the **Task list (§4)** below.
+**To resume (do this at session start, unprompted):** start Docker, then
+`cd ~/dev/dynamicog.org && docker compose up -d && open http://localhost:4000/`, so the working
+site is in front of Nick. Then work the **Task list (§4)** below.
+
+**At session close:** walk §4 and §5 against the session's commits, check off or delete what's
+done, remove anything a later decision contradicts, refresh the §2 log, then copy this file over
+the Box copy. Session 4 skipped this and left the handoff stale.
 
 ---
 
 ## 0. Where everything lives
 
-- **Working repo (all edits happen here):** `~/dev/dynamicog.org` — full git clone of
-  al-folio with the scaffold merged in. On branch `main`. **Outside Box.**
+- **Working repo (all edits happen here):** `~/dev/dynamicog.org`, a full git clone of al-folio
+  with the scaffold merged in. On branch `main`. **Outside Box.**
 - **This handoff exists in two synced places:** `~/dev/dynamicog.org/SESSION-HANDOFF.md`
   (canonical, in-repo but excluded from the build) and a copy at
   `Box/LAB-LOGISTICS/Website-Redesign/SESSION-HANDOFF.md` (backup for when the repo isn't handy).
-- **Branding assets (headshots, logos, banner):** `Box/LAB-LOGISTICS/Branding/COLA_Psychology_logos/`
-  (`headshots/`, `otherbanners/brain-scan.png`, `COLA_Psychology_logos_formal|primary/4_RGB/`).
+- **Art direction (style guide, briefs, generated tiles + provenance notes):**
+  `Box/LAB-LOGISTICS/Website-Redesign/Art-Direction/`. Each tile has a `<slug>-2026-11-08.txt`
+  note in `generated/` recording its source file and how it was padded to 3:2.
+- **Branding assets (headshots, logos, banner):** `Box/LAB-LOGISTICS/Branding/COLA_Psychology_logos/`.
 - **Publication PDFs (source of truth):** `Box/research-hub/publications/` (index in its `CLAUDE.md`).
-- **WordPress export (legacy text/images):** `Box/LAB-LOGISTICS/dynamicoglab.WordPress.2026-07-17.xml`.
+- **WordPress export (legacy text/images):** `Box/LAB-LOGISTICS/Website-Redesign/dynamicoglab-wordpress-export-2026-07-17.xml`.
+- **Teaching source material** (for the teaching page): `~/Desktop/teaching/` (FDS I weekly
+  breakdown `FDS I/PSY371E-weekly-content-for-SDS.md`; FDS II syllabus `FDS II/FDS2-F26-Syllabus-v2.docx`).
 - **Live old site (reachable, good for pulling legacy images):** https://dynamicog.org
 
 ## 1. How to preview locally
@@ -30,6 +40,7 @@ Toolchain: **Docker** (system Ruby 2.6 is too old to run al-folio directly).
 cd ~/dev/dynamicog.org
 open -a Docker                    # wait until `docker info` works
 docker compose up -d              # serves http://localhost:4000  (container serves 8080; remapped)
+open http://localhost:4000/
 docker compose logs --tail=40 jekyll   # check for build errors
 docker compose restart jekyll     # REQUIRED after any _config.yml change
 docker compose down               # stop when done
@@ -37,201 +48,151 @@ docker compose down               # stop when done
 - Port 4000 via `docker-compose.override.yml` (git-ignored). LiveReload auto-refreshes.
 - `_pages`, `_layouts`, `assets`, `_data`, `_bibliography` edits: picked up by the watcher.
 - `_config.yml` edits: **restart required**.
-- Chrome disk-caches `main.css`/pages aggressively during preview — if a CSS change doesn't
+- Chrome disk-caches `main.css`/pages aggressively during preview. If a CSS change doesn't
   show, hard-reload or append a throwaway query (`/?v=2`).
+- **Checks:** `bash test/dynamicog/check-site.sh` (88 assertions against localhost:4000, all
+  passing at end of session 5) and `bash test/dynamicog/screenshots.sh <outdir>`.
 
 ## 2. Current git state
 
 Branch `main`, tracking **`origin` = `https://github.com/nickduran/dynamicog.org` (private, created
-2026-11-08)**. The al-folio template remote is now `upstream`. First off-machine backup exists.
+2026-11-08)**. The al-folio template remote is `upstream`.
 
-**History was rewritten once, 2026-11-08, before the first push.** The repo had been a shallow
-clone (al-folio at depth 1 plus Nick's commits), which GitHub refuses to accept. Rather than pull
-~370 MB of upstream history, the imported al-folio snapshot ("Update Google Scholar citations") was
-grafted into a true root, so the repo is self-contained (13 commits, ~49 MB). Every hash changed;
-older notes citing `349e5be`, `c759159`, `26aa0a9`, etc. refer to this same history under its old
-hashes. A pre-rewrite bundle is at `~/dev/dynamicog.org-pre-graft-2026-11-08.bundle`.
+**History was rewritten once, 2026-11-08, before the first push** (shallow clone grafted to a true
+root; ~49 MB). Older notes citing `349e5be`, `c759159`, `26aa0a9`, etc. refer to the same history
+under pre-rewrite hashes. Pre-rewrite bundle: `~/dev/dynamicog.org-pre-graft-2026-11-08.bundle`.
 
 ```
+d5ff165 feat(site): theme 03 tile, remove al-folio demo content, people/teaching/get-involved updates
+eee9d18 feat(home): replace theme 02 tile with revised drawing
+d6c11ba fix(home): rebuild theme tiles with continuous paper texture instead of flat padding
+35760b5 feat(home): second real theme tile (natural behavior in the wild)
+dc25c4d feat(site): retire research page (redirect to /#research), chip arrows, first real theme tile
+1f60a52 docs: handoff — private origin created, history grafted to a true root before first push
 21ebac8 fix(home): review fixes — AA-contrast gold-deep, nowrap methods/accent, trimmed banner, aligned dark band
 324dc6b chore(home): regression checks, overrides audit, handoff update
-3b627f6 test(home): responsive and font-fallback screenshot script
-eeee075 feat(home): Ink dark mode with banner band
-5ae698a feat(home): four theme rows from _data/themes.yml with placeholder tiles and project chips
-dfb6541 feat(home): hero block with eyebrow, headline, methods, links, recruiting, photo
-f612d90 feat(footer): in-flow footer with UT lockup and short credit
-b98b2ea feat(home): site-wide Paper/Ink tokens, Fraunces+Inter, in-flow footer flag; add check script
-ad583df Rebuild research page: three sections, twelve projects, selected papers
-9ac3e29 Home banner/branding, publications flat list, people cards, project images
-cdba17b Add repo-local SESSION-HANDOFF.md (excluded from build)
-3314af0 DynamiCog site: merge scaffold, rebuild publications, apply review edits
-e9ef82b Update Google Scholar citations
+... (11 earlier commits back to e9ef82b, the imported al-folio snapshot)
 ```
+Whether `d5ff165` and the handoff commit after it are pushed: check `git status -sb`.
 
 ## 3. DONE and verified (in the browser)
 
 **Structure & content**
-- al-folio + scaffold merged; builds clean. Nav IA: home · research · people · publications ·
-  teaching · get involved. **Demo cruft is NOT fully removed** — this line previously claimed it was.
-  Four demo pages are still reachable and in the sitemap; see §4B.
-- **Publications**: renders all **63 papers** as a **flat running list, newest first** (no year
-  headings — `_config.yml` scholar `group_by: none`, `sort_by: year, month`, `order: descending`).
-  Name-highlighted; each entry has a PDF link (7 also GitHub, 3 also OSF); button labels
-  renamed (Code→GitHub, Website→OSF) via local `_layouts/bib.liquid`. `_bibliography/papers.bib`
-  rebuilt from the research-hub index. DOI buttons intentionally omitted.
+- al-folio + scaffold merged; builds clean. **Nav:** home · people · publications · teaching ·
+  get involved. (The research page was retired 2026-11-08; see below.)
+- **al-folio demo content removed (session 5).** `/cv/`, `/books/`, `/repositories/`, `/blog/`
+  return 404 and are out of `sitemap.xml`. Deleted: the demo pages, the Albert Einstein CV
+  (`assets/rendercv/`, `_data/cv.yml`, `assets/json/resume.json`), demo audio/video/jupyter/plotly/
+  html, numbered stock images, `rhino`/`template_error`/`the_godfather`, publication-preview gifs,
+  `_data/repositories.yml`. `_config.yml`: `external_sources` removed, `blog_name`/`blog_description`
+  rebranded, `disqus_shortname` cleared, `books` collection + archive removed, `jekyll_get_json`
+  removed, `features.cv.enabled: false`. RSS icon hidden in `_data/socials.yml` (no posts).
+- **Workflows pruned:** only `.github/workflows/deploy.yml` remains (18 upstream workflows deleted).
+- **Overrides audit:** done in session 4; `.al-folio-overrides.yml` is committed.
+- **Publications**: all **63 papers**, flat running list, newest first (`group_by: none`,
+  `sort_by: year, month`, `order: descending`). Name-highlighted; each has a PDF link (7 also
+  GitHub, 3 also OSF); button labels renamed via local `_layouts/bib.liquid`. DOI buttons omitted.
 - **PDFs hosted in-repo** under `/publications/{journal,chapters,proceedings,other}/`; bib uses
-  absolute `https://dynamicog.org/publications/...` URLs (preserves old inbound links + serves
-  post-cutover).
+  absolute `https://dynamicog.org/publications/...` URLs.
 - **Dropped for now** (files kept, `published:false`): Resources & News (flip flags to re-enable).
 
-**Home page** (`_pages/about.md` + local `_layouts/about.liquid`)
-- Full-bleed **gold "neural" hero banner** (`assets/img/banner_brain.png`) with "DynamiCog Lab"
-  + "(applied) Cognitive Dynamics and Communication (aCDC)" overlay. Verified light + dark, no
-  horizontal scrollbar. CSS in `main.scss` (`.dynamicog-hero*`, `html,body{overflow-x:hidden}`).
-- **UT/Dept-of-Psychology lockup** (`assets/img/ut_psychology_logo.png`) top-left of the body;
-  gets a white card backing in dark mode.
-- **Headshot** `assets/img/prof_pic.jpg` — grey-tee tea-field photo, auto-oriented + cropped
-  (wider crop, chin included). Circular.
-- **Social icons** (bottom of profile column): email · Google Scholar · GitHub · ORCID · RSS.
-  `_data/socials.yml`: `scholar_userid: dU26pfIAAAAJ`, `orcid_id: 0000-0002-8872-5617`. OSF omitted.
-- Profile spacing fixed so wrapping body text no longer crowds the info block.
-
-**People page** (`_pages/people.md` + `_data/people.yml`)
-- Grad students + research assistants render as **photo-box cards** (`.people-grid`/`.person-card`).
-  Dashed-circle user-icon placeholder when no photo. Grad cards larger (`--grad`); RA cards small,
-  name-only (`--ra`). Add a photo: drop a square image in `assets/img/people/` and set that
-  person's `image:` field. Grad student **Jiahan (Nicole) Li** added.
-
-**Home page — redesigned in session 4 (2026-11-08)** — spec
+**Home page** (`_pages/about.md` + local `_layouts/about.liquid`). Spec
 `docs/superpowers/specs/2026-11-08-home-page-redesign-design.md`, plan
 `docs/superpowers/plans/2026-11-08-home-page-redesign.md`.
-- Home is now the research statement: eyebrow ("DynamiCog Lab · (applied) Cognitive Dynamics and
-  Communication"), two-line headline with a gold phrase, lede, methods line, link row (email,
-  Scholar, GitHub, ORCID), one-line recruiting call, circular headshot; then **four theme rows**
-  (drawing tile 3:2 left, numeral + title + two/three sentences + project chips right).
-- **All copy is data:** hero words in `_pages/about.md` front matter (`eyebrow`, `headline`,
-  `lede`, `methods`, `recruiting`, `director`); themes in `_data/themes.yml` (title, blurb,
-  `image`, `projects` slugs). Chips resolve slugs to `_projects/` by URL; an unresolved slug emits
-  `<!-- theme-row: unresolved project slug "x" -->`.
-- **Look = "Paper"** (cream `#f6f1e7`, charcoal, gold `#c9a227` accents, links in gold-deep
-  `#8a6f12`) in light mode; **"Ink"** in dark mode (near-black, cream type, the old gold neural
-  banner returns as a full-bleed band behind the headline). Fonts **Fraunces + Inter site-wide**
-  via the Google Fonts URL in `_config.yml`. Footer is now **in-flow** (`footer_fixed: false`),
-  UT lockup left, short credit right, via `_includes/footer.liquid`.
-- The old gold banner, the two prose paragraphs, and the in-body UT lockup are gone from home.
-- **Tiles are CSS placeholders** (two charcoal bars on cream) until real drawings exist; set
-  `image: <file>` in `themes.yml` with the file in `assets/img/themes/`. Art direction lives in
-  Box `LAB-LOGISTICS/Website-Redesign/Art-Direction/`.
-- New local overrides: `_includes/footer.liquid`, `_includes/theme-row.liquid`; `_layouts/about.liquid`
-  rewritten. `.al-folio-overrides.yml` generated and committed.
-- **Checks:** `bash test/dynamicog/check-site.sh` (65 assertions against localhost:4000) and
-  `bash test/dynamicog/screenshots.sh <outdir>`.
+- Home is the research statement: eyebrow, two-line headline with a gold phrase, lede, methods
+  line, link row (email, Scholar, GitHub, ORCID), one-line recruiting call, circular headshot;
+  then **four theme rows** (3:2 tile left; numeral + title + blurb + project chips right). The
+  section is anchored `#research`.
+- **All copy is data:** hero words in `_pages/about.md` front matter; themes in
+  `_data/themes.yml` (title, blurb, `image`, `projects` slugs). Unresolved slugs emit
+  `<!-- theme-row: unresolved project slug "x" -->`. Chips carry a gold ↗ (`.dc-chip::after`).
+- **Look:** "Paper" light (cream `#f6f1e7`, charcoal, gold `#c9a227`, links gold-deep `#8a6f12`);
+  "Ink" dark (near-black, cream type, the gold neural banner as a full-bleed band behind the
+  headline). Fraunces + Inter site-wide. Footer in-flow, UT lockup left, short credit right
+  (`_includes/footer.liquid`).
+- **Theme tiles: three of four are real drawings** (each 1800×1200, square Nano Banana source
+  padded to 3:2 by stretching only clean paper margins):
+  01 `coordination.png`, 02 `in-the-wild.png`, 03 `computation.png` (abstract charcoal lattice,
+  one gold stroke; added session 5). **04 people-and-machines is still the CSS placeholder.**
 
-**Research page — retired 2026-11-08 (Nick's call).** The home page's theme rows and project
-chips now carry the research overview; a second index of the same twelve projects was judged
-redundant. `_pages/projects.md` is a `layout: none` meta-refresh stub to `/#research` (no redirect
-plugin is configured), `nav: false`, out of the sitemap. **The twelve detail pages under
-`/projects/<slug>/` are untouched and still linked from the chips.** Chips now carry a gold ↗
-(`.dc-chip::after`). A grants page was considered and rejected (CV covers it); a "spotlight" page
-may come later when there is something to spotlight. The 2026-09-21 notes below describe the page as
-it was before retirement.
+**People page** (`_pages/people.md` + `_data/people.yml`)
+- Sections: Lab Director · **Lab Manager (Farhana Anisha, added session 5)** · Graduate Students
+  (Jiahan (Nicole) Li) · Research Assistants · Alumni · Faculty Collaborators. Photo-box cards with
+  dashed-circle placeholders. Natalie Liu removed (withdrew 2026-09-15). Director's Scholar link
+  filled. Director role and bio now render as separate paragraphs.
 
-**First real theme tiles (2026-11-08):** `assets/img/themes/coordination.png` and `in-the-wild.png` (each 1800×1200, padded to
-3:2 from square Nano Banana generations) set on themes 01 and 02 in `_data/themes.yml`. Sources and briefs in
-Box `Website-Redesign/Art-Direction/`.
+**Teaching page** (`_pages/teaching.md`, rewritten session 5)
+- Leads with the UT **Foundations of Psychological Data Science** sequence: PSY 371E (FDS I) and
+  PSY 371F (FDS II), one paragraph each, drawn from the Sp26 FDS I weekly breakdown and the F26
+  FDS II syllabus. The three ASU courses are a small, muted `.teaching-archive` block at the bottom
+  (style in `main.scss`).
 
-**Research page — rebuilt in session 3** (`_pages/projects.md` + `_projects/*.md`)
-- Now **three sections in this order**: Grant-Funded Projects (6) · Other Ongoing Projects (2) ·
-  Previous Projects (4). Driven by `display_categories`; each project's `category` places it and
-  `importance` orders it within the section. Category anchors are slugified (they previously emitted
-  `id="Grant-Funded Projects"` with a literal space).
-- **Twelve projects**, restored from the live WordPress site's own three sections, plus
-  Human-Robot Co-Adaptation which post-dates that site. Files renamed to clean slugs
-  (`/projects/suspicion-911/`), dropping the `1_`…`6_` prefixes.
-- Each detail page carries the **full formal title**, the **award line** (all six grant-funded), the
-  **original description verbatim** from the WordPress export, and a **Selected papers** list.
-- Cards show a **short title** via a `card_title` front-matter field, read by a new local
-  `_includes/projects.liquid` override. Without it the formal titles run eight lines and swamp the
-  card. `card_title` falls back to `title` when absent.
-- Card thumbnails are normalized to a uniform **3:2 crop** by `.projects .card-img-top` in
-  `main.scss` (`object-fit: cover`), so source images do not need pre-cropping.
-- Verified: builds clean, all 12 detail pages 200, all 12 cards have images, 47 citations, every
-  cited PDF resolves on disk.
-- **Three images are generated filler** in a matched gold-on-dark style: `discourse-analysis.jpg`,
-  `semantic-models.jpg`, `robot-coadaptation.jpg`. The last replaced al-folio's stock
-  sunset-over-rocks photo. The other nine are real images pulled from the old site.
+**Get Involved page** (`_pages/get-involved.md`, rewritten session 5)
+- PhD section now leads and recruits through the **Natural Behavior and Computation (NBC)** area:
+  list NBC as your area, name Nick, email him before applying. Links to the department's
+  prospective-graduate-students page. No NBC-specific link: as of 2026-11-08 the department's
+  areas-of-study page does not list NBC.
+
+**Research page: retired 2026-11-08 (Nick's call).** The home page's theme rows and chips carry the
+research overview. `_pages/projects.md` is a `layout: none` meta-refresh stub to `/#research`,
+`nav: false`, out of the sitemap. **The twelve detail pages under `/projects/<slug>/` stay** and are
+linked from the chips. Each carries the full formal title, award line (grant-funded ones), the
+original WordPress description verbatim, and a hand-written **Selected papers** list. Three project
+images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
+`robot-coadaptation.jpg`); the other nine came from the old site.
 
 ## 4. TASK LIST — what's left
 
 ### A. Needs Nick's input / assets
-- [ ] **Theme drawings** — all four home tiles are CSS placeholders. Brief + style guide in Box
-      `Website-Redesign/Art-Direction/`; drop finished 3:2 files in `assets/img/themes/` and set
-      `image:` in `_data/themes.yml`.
-- [ ] **Theme wording** — titles, blurbs, headline, lede are Claude's drafts; edit `_data/themes.yml`
+- [ ] **Theme 04 drawing** (People and machines, adapting): still a CSS placeholder. There is no
+      art brief for it. Drop a square source in Downloads and say so; Claude pads it to 3:2.
+- [ ] **Theme wording**: titles, blurbs, headline, lede are Claude's drafts; edit `_data/themes.yml`
       and `_pages/about.md` front matter.
-- [ ] **Human-Robot Co-Adaptation image** — currently generated filler, not a real image.
-- [ ] **UT Austin course listings** — `_pages/teaching.md` still ships the visible placeholder
-      "Courses at UT Austin / _To be added._" Fill it or drop the heading.
-- [ ] **Get Involved / NBC framing** — the page sends prospective PhD students to "the UT Austin
-      Department of Psychology graduate program" without naming the **NBC area**. Application
-      season is now.
-- [ ] **Grad/RA photos** — optional; square images in `assets/img/people/` (the folder does not
-      exist yet) plus `image:` fields in `_data/people.yml`.
-- [ ] **Skim publication details** — a few proceedings may lack volume/pages.
+- [ ] **Review session-5 copy**: teaching descriptions and the Get Involved NBC paragraph are
+      Claude's drafts. Confirm the course titles match the catalog (the FDS I materials use both
+      "Foundations of Psychological Data Science I" and "Psychology Data Science Foundations I").
+- [ ] **RA roster**: Nadia Talanker and Madison Jaques have been unreachable since June per
+      `CLAUDE.md`; still listed. Mona Xue's role is unrecorded, so she is not listed.
+- [ ] **Human-Robot Co-Adaptation image**: generated filler, not a real image.
+- [ ] **Grad/RA/lab-manager photos**: optional; square images in `assets/img/people/` (folder does
+      not exist yet) plus `image:` fields in `_data/people.yml`.
+- [ ] **Skim publication details**: a few proceedings may lack volume/pages.
 
 ### B. Can be done autonomously
-- [ ] **Remove the al-folio demo pages — blocker, do before the first push.** `/cv/` (Albert
-      Einstein), `/books/`, `/repositories/`, `/blog/` all return 200 and are in `sitemap.xml`.
-      Strip `external_sources` from `_config.yml` and fix `blog_name`/`blog_description`, which
-      still read "al-folio — a simple whitespace theme for academics". Delete the demo assets
-      (`the_godfather`, `rhino`, `template_error`, the demo publication previews).
-- [ ] **Fix `_data/people.yml`** — drop Natalie Liu (withdrew 2026-09-15); add Farhana Anisha, the
-      lab manager, who is missing entirely; fill the director's empty `scholar:` field.
-- [ ] **Prune the inherited upstream workflows** — ~18 of them (axe, lighthouse, codeql,
-      visual-regression, unit-tests, prettier…) will fire on the new repo and mostly fail. Keep
-      `deploy.yml`.
-- [ ] **Run the overrides audit** — `bundle exec al-folio upgrade overrides audit`; commit
-      `.al-folio-overrides.yml`, which has never been generated. Local overrides are now
-      **five**: `_layouts/bib.liquid`, `_layouts/about.liquid`, `_includes/projects.liquid`,
-      `assets/css/main.scss`, and `_pages/projects.md`.
+- [ ] **Footer credit** still says "Built with al-folio". Fine to keep; drop if unwanted.
 - [ ] **Re-enable Resources/News** if wanted (`published:` flags).
-- [ ] **Commit the session-3 work** (see §2).
 
 ### C. Deploy (only on Nick's go — see §6)
-- [ ] Create GitHub repo, push, enable Pages, point DNS, verify.
+- [ ] Decide Pages hosting for a private repo (GitHub Pro, or make the repo public), enable Pages,
+      verify the github.io URL, then point DNS.
 
 ## 5. Decisions locked (do NOT re-litigate)
 - Framework al-folio; build via Docker; repo at `~/dev/dynamicog.org`.
 - PDFs in-repo under `/publications/` with absolute URLs.
-- Publications = **flat running list, newest first** (changed from year-grouped in session 2b).
-- DOI buttons omitted (PDF/OSF/GitHub only). Data in research-hub/CLAUDE.md if ever wanted.
-- OSF social icon omitted. Headshot may be casual ("somewhat unprofessional" is fine).
-
-- Research page = **three sections** sourced from the live WordPress site's own grouping, not from
-  the new site's earlier Active/Past-work tagging (which had mis-bucketed two grant-funded projects).
-- Project URLs are **clean slugs**, no numeric prefixes.
-- **Selected papers are hand-written text, generated from `papers.bib` at write time but not wired
-  to it.** The alternative — tagging bib entries with a `project` field and rendering each page with
-  `{% raw %}{% bibliography --query @*[project=...] %}{% endraw %}` — was offered and declined. The
-  mechanism does work (`bibliography[query]` delegates to bibtex-ruby, which supports arbitrary
-  field queries) if this is ever revisited. **Consequence: adding a paper to `papers.bib` does not
-  update the twelve project pages.**
-- Card titles are short (`card_title`); detail pages keep the full formal title.
-- **Home page (2026-11-08):** structure "C" (one page, full-width theme rows, no click-to-expand);
-  Paper light / Ink dark; research page (grant grid) **stays** in the nav; four themes, deception
-  is a project under theme 02 not a theme; headshot stays on home; eyebrow carries the aCDC
-  expansion; Fraunces + Inter site-wide; footer in-flow; links use gold-deep in light mode.
+- Publications = **flat running list, newest first**.
+- DOI buttons omitted (PDF/OSF/GitHub only). OSF social icon omitted. Headshot may be casual.
+- Project URLs are **clean slugs**, no numeric prefixes. Detail pages keep the full formal title.
+- **Selected papers are hand-written, not wired to `papers.bib`.** The bib-query alternative was
+  declined. Consequence: adding a paper to `papers.bib` does not update the project pages.
+- **Home page (2026-11-08):** one page, full-width theme rows, no click-to-expand; Paper light /
+  Ink dark; four themes, deception is a project under theme 02 not a theme; headshot stays on
+  home; eyebrow carries the aCDC expansion; Fraunces + Inter site-wide; footer in-flow; links use
+  gold-deep in light mode.
+- **Research page retired (2026-11-08)**; the home theme rows replace it. A grants page was
+  rejected (CV covers it); a "spotlight" page may come later.
+- **No blog, CV page, books, or repositories pages** (removed session 5).
+- **Teaching page:** UT FDS sequence first; ASU courses kept but small, at the bottom.
+- **Get Involved:** PhD recruitment framed through the NBC area.
 
 ## 6. DEPLOY checklist (nothing live yet)
-0. **Clear the §4B demo-page blocker first.** Pushing with `/cv/` serving Albert Einstein and
-   `/blog/` branded al-folio puts them in the sitemap.
-1. **GitHub repo**: ~~create~~ **done 2026-11-08** — `nickduran/dynamicog.org`, private, `main` pushed.
-   **GitHub Pages on a private repo needs GitHub Pro or the repo made public**; decide at deploy time.
-   Verify the GitHub-hosted URL completely **before** touching DNS.
-2. **Action**: keep al-folio's stock `.github/workflows/deploy.yml` (builds w/ jekyll-scholar +
-   imagemagick → `gh-pages`). `CNAME` (= `dynamicog.org`) is at repo root already.
+0. ~~Clear the demo-page blocker~~ **done session 5.**
+1. **GitHub repo**: `nickduran/dynamicog.org`, private, `main` pushed. **GitHub Pages on a private
+   repo needs GitHub Pro or the repo made public**; decide at deploy time. Verify the
+   GitHub-hosted URL completely **before** touching DNS.
+2. **Action**: al-folio's stock `.github/workflows/deploy.yml` (jekyll-scholar + imagemagick →
+   `gh-pages`) is the only workflow. `CNAME` (= `dynamicog.org`) is at repo root.
 3. **Settings → Pages**: source `gh-pages`; custom domain `dynamicog.org`; Enforce HTTPS after cert.
-4. **DNS at registrar** (`whois dynamicog.org` first — likely Bluehost):
+4. **DNS at registrar** (`whois dynamicog.org` first; likely Bluehost):
    | Type | Host | Value |
    |------|------|-------|
    | A | @ | 185.199.108.153 |
@@ -245,12 +206,18 @@ Box `Website-Redesign/Art-Direction/`.
 ## 7. Gotchas
 - al-folio is a **gem theme** (`theme: al_folio_core`); layouts/includes/SCSS live in the gem
   (`/usr/local/bundle/gems/al_folio_core-*/` inside the container). Override by placing a
-  same-path file locally (done: `_layouts/bib.liquid`, `_layouts/about.liquid`, `assets/css/main.scss`).
-- `test/style_contract.js` fails just because `_layouts/` exists — that gate is for the upstream
-  *starter* repo; a customized site legitimately uses overrides. Stock `deploy.yml` (plain
-  `jekyll build`) is unaffected.
+  same-path file locally. Current local overrides: `_layouts/bib.liquid`, `_layouts/about.liquid`,
+  `_includes/projects.liquid`, `_includes/footer.liquid`, `_includes/theme-row.liquid`,
+  `assets/css/main.scss`.
+- `test/style_contract.js` fails just because `_layouts/` exists; that gate is for the upstream
+  *starter* repo. Stock `deploy.yml` is unaffected.
+- The dev sitemap shows `http://0.0.0.0:8080/...` URLs; that is the dev server's `site.url`, not a
+  production problem.
 - The Docker container occasionally stops; `docker compose up -d` restarts it. New `_layouts`/
   `assets` files sometimes need `docker compose restart jekyll` to register.
-- zsh aborts commands on unmatched globs (`*.PDF`) — use `find` for file ops.
-- Image processing (crop/convert) is easiest via the container's ImageMagick 7
-  (`docker exec <container> magick ...`); the repo is bind-mounted at `/srv/jekyll`.
+- zsh aborts commands on unmatched globs (`*.PDF`, `--include=*.html`); quote them or use `find`.
+- macOS `grep -E` rejects repetition counts over 255 (`{0,400}`); split into two `{0,200}`.
+- Image processing is easiest via the container's ImageMagick 7
+  (`docker exec dynamicogorg-jekyll-1 magick ...`); the repo is bind-mounted at `/srv/jekyll`.
+  For tiles, check which margin columns are truly clean before stretching (`-format
+  "%[fx:minima]"` on narrow crops); stray charcoal near the art streaks when stretched.
