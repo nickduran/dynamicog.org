@@ -198,6 +198,13 @@ kramdown:
 include: ["_pages"]
 exclude:
   - al-folio-upgrade-report.md
+  - AGENTS.md
+  - CLAUDE.md
+  - requirements.txt
+  - test/
+  - .agents/
+  - .codex/
+  - .gemini/
   - SESSION-HANDOFF.md
   - bin/
   - CONTRIBUTING.md

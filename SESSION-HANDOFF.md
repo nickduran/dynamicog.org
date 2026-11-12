@@ -165,7 +165,14 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 - **WordPress archive:** all 102 files under `wp-content/uploads/` referenced by the export, plus
   rendered HTML of the ten published pages, saved to Box
   `Website-Redesign/WordPress-Archive-2026-11-12/` (README inside).
-- Checks: 96 assertions, all passing; production build verified (CNAME, stubs, og tag present).
+- **Deploy workflow fixed:** it had failed on every push since the runners moved to Ubuntu 26
+  (Ruby 3.3.5 is not built there). Now `ruby-version: "3.3"`; first green run 2026-11-12, and the
+  `gh-pages` branch exists. `AGENTS.md`, `CLAUDE.md`, `requirements.txt`, `test/` and the agent
+  dot-folders are now in `exclude:` (they were being published).
+- Checks: 96 assertions, all passing against both the Docker preview and the built `gh-pages`
+  branch served locally (which includes the purgecss step the preview skips).
+- `gh` defaults to the `upstream` remote (al-folio) unless told otherwise; `gh repo set-default
+  nickduran/dynamicog.org` was run 2026-11-12. Use `-R nickduran/dynamicog.org` if in doubt.
 
 **Session 6 (2026-11-12), People and Teaching**
 
