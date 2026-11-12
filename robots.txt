@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://dynamicog.org/sitemap.xml
