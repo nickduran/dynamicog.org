@@ -7,26 +7,20 @@ nav: true
 nav_order: 4
 ---
 
-## Foundations of Psychological Data Science (UT Austin)
-
-A two-course undergraduate sequence in the Department of Psychology that teaches data science
-for psychological and brain science in Python, using Jupyter notebooks and real datasets.
-
 ### PSY 371E · Foundations of Psychological Data Science I
 Students learn to load, clean, reshape, and visualize data with pandas and
 seaborn, then move from description to modeling: distributions, correlation, simple and multiple
-regression, and confounding (including Simpson's paradox). Each module pairs a guided tutorial
+regression, and confounding. Each module pairs a guided tutorial
 with mini-projects on real data, from film representation to concussion and reaction time. The
 course ends with an individual project: a pitched and peer-reviewed proposal, a final analysis
 notebook, and a presentation.
 
 ### PSY 371F · Foundations of Psychological Data Science II
-A flipped, hands-on course that builds on FDS I toward the tools of working data
-science: Python fundamentals (functions, loops, objects), NumPy, pandas, and multi-panel figures;
-Git and GitHub for version control and collaboration; simulation as a way to reason about
-statistics; regression, introductory machine learning, and time-series analysis. Students also
-practice using AI coding tools deliberately, with attention to verification and attribution, and
-finish with a final project kept on GitHub and presented live to a mixed audience.
+Builds on the first course toward machine learning for the behavioral sciences. Students begin with
+supervised learning and cross-validation, then work through the bias-variance trade-off, tree-based
+models and how to interpret them, unsupervised methods such as clustering and principal components
+analysis, and neural networks for images and text. The math (probability, functions, vectors) comes
+in as needed, but the course is built around projects on real behavioral data. Students finish with a machine learning project of their own.
 
 ---
 
@@ -40,5 +34,7 @@ finish with a final project kept on GitHub and presented live to a mixed audienc
   neuroscience, and psychology.
 - **Language & Social Interaction.** Language in its natural environment: dialogue, convergence,
   perspective-taking, and deception.
+- **Sensation & Perception.** How the senses turn light, sound, and touch into experience:
+  vision, audition, and the other senses, from psychophysics to the brain.
 
 </div>

@@ -5,12 +5,23 @@ director:
   name: Nick Duran
   role: Lab Director
   image: prof_pic.jpg
+  # People-page photo (separate from the home-page prof_pic.jpg). Drop it in
+  # assets/img/people/ and set the filename here; empty shows a placeholder.
+  people_image:
+  # CV link under the name on the People page. Put the PDF in assets/pdf/ and set
+  # the filename here (e.g. cv: duran_cv.pdf). Empty = placeholder link (#).
+  cv:
   bio: >
     Associate Professor in the Department of Psychology, College of Liberal Arts,
     at The University of Texas at Austin. Ph.D. in Cognitive Psychology from the
     University of Memphis (NSF Graduate Research Fellow); NSF Postdoctoral Research
-    Fellow at the University of California, Merced (Cognitive and Information Sciences)
-    and research affiliate at University College London.
+    Fellow at the University of California, Merced (Cognitive and Information Sciences).
+  # Research interests (one sentence-style list), People page only.
+  interests:
+    - Communication dynamics and behavioral data science
+    - cognition as embodied and extended into the larger environment
+    - covariation of action and mind in decision tasks and belief expression
+    - language and discourse analysis
   links:
     email: nicholas.duran@utexas.edu
     scholar: https://scholar.google.com/citations?user=dU26pfIAAAAJ
@@ -27,46 +38,80 @@ lab_manager:
 # to its filename (e.g. image: jiahan_li.jpg). Omit `image:` to show a placeholder.
 grad_students:
   - name: Jiahan (Nicole) Li
-    role: Graduate Student
-    image: # e.g. jiahan_li.jpg — add to assets/img/people/
+    role: PhD Graduate Student
+    image: jiahan_li.jpg
 
 # Current undergraduate research assistants (Fall 2026)
+# Senior RAs (senior: true) get a photo slot: a placeholder until `image:` is set.
+# Everyone else is listed by name only.
 research_assistants:
-  - name: Samantha Slogoff
   - name: Annabelle Deason
-  - name: Nadia Talanker
-  - name: Niyati Naveen Nair
-  - name: Madison Jaques
-  - name: Judah Castillo
-  - name: Samantha Lee
+    senior: true
   - name: Rebekah King
+    senior: true
+  - name: Samantha Slogoff
+  - name: Samantha Lee
+  - name: Linrui Han
+  - name: Rashi Sharma
 
-# Graduate alumni (committee chair) with placements — a lab selling point, keep it
+# Master's alumni (committee chair/supervisor), newest first. Source: Nick's CV.
+# placement and note are optional; omit placement when the CV lists none.
 grad_alumni:
-  - name: Anuja Thomas
-    placement: "Ph.D. student, Florida State University"
-  - name: Amie Paige
-    placement: "Ph.D. student, SUNY Stony Brook"
-  - name: Jade Yonehiro
-    placement: "Ph.D. student, University of Colorado, Boulder"
-  - name: Chelsea Johnson
-    placement: "Ph.D. student, ASU (Human Systems Engineering)"
-  - name: J.P. Gonzales
-    placement: "Ph.D. student, Miami University; Industry"
-  - name: Josh Maxwell
-    placement: "Ph.D. student, University of New Mexico"
-  - name: Stacie Lafko
-    placement: "Ph.D. student, ASU (Human Systems Engineering)"
+  - name: "Ayah Abu Zour"
+    year: 2025
+  - name: "Yasaman Mohammandpour"
+    placement: "Ph.D. program, Arizona State University"
+    year: 2025
+  - name: "Gabby Young"
+    year: 2025
+  - name: "Alex Pedraza"
+    placement: "US Air Force"
+    year: 2024
+  - name: "Anuja Thomas"
+    placement: "Ph.D. program, Florida State University"
+    year: 2023
+  - name: "Myles Alucard"
+    placement: "Ph.D. program, Mississippi State University"
+    year: 2023
+  - name: "Amie Paige"
+    placement: "Ph.D. program, SUNY at Stony Brook"
+    year: 2021
+  - name: "Li-Hsin Chen"
+    year: 2020
+  - name: "Jacob (Mara) Hamlett"
+    year: 2020
+  - name: "Nicole Lobo"
+    note: co-chair
+    placement: "Ph.D. program, University of Pittsburgh"
+    year: 2020
+  - name: "Rex Balanquit"
+    year: 2019
+  - name: "Jade Yonehiro"
+    placement: "Ph.D. program, University of Colorado, Boulder"
+    year: 2018
+  - name: "Chelsea Johnson"
+    placement: "Ph.D. program, ASU (Human Systems Engineering)"
+    year: 2017
+  - name: "Stacie Lafko"
+    placement: "Ph.D. program, ASU (Human Systems Engineering)"
+    year: 2017
+  - name: "Xiaochen Sun"
+    year: 2017
+  - name: "James Gonzales"
+    placement: "Ph.D. program, Miami University"
+    year: 2016
 
 # Faculty collaborators (academic; trim/extend as you like)
 collaborators:
   - Rick Dale
+  - Sidney D'Mello
   - Riccardo Fusaroli
   - Scott Crossley
-  - Sidney D'Mello
-  - Moreno Coco
   - Danielle McNamara
+  - Jessica Salerno
+  - Wagahta Semere
   - Dean Schillinger
+  - Moreno Coco
   - Daniel Richardson
   - Ashley Randall
   - Stephen Nicholson
@@ -75,3 +120,7 @@ collaborators:
   - Alexia Galati
   - Denis O'Hora
   - Valerie Shute
+  - Mary Reed
+  - Nicole Roberts
+  - Angela Stewart
+  - Chris Street

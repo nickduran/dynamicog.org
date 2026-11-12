@@ -485,6 +485,21 @@ html[data-theme="dark"] .dc-hero__photo picture img {
   font-size: 0.95rem;
 }
 
+/* Lab Director: bold label on the research-interest line; CV link under the name. */
+.director-label {
+  font-weight: 600;
+}
+
+.person-cv {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--global-theme-color);
+}
+
+.person-cv i {
+  margin-right: 0.2rem;
+}
+
 /* Research assistants: same small photo box, name only (not bolded). */
 .people-grid--ra .person-name {
   font-weight: 400;
