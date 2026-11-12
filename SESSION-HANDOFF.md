@@ -1,7 +1,7 @@
 # DynamiCog site — session handoff & task list
 
-**Last updated 2026-11-12 (session 6: People and Teaching edits, Nicole's headshot, then launch prep: repo public, redirects, link previews, favicon, WordPress archive).** Goal: finish the al-folio site and launch `dynamicog.org` on GitHub Pages.
-Nothing is live yet; the old WordPress site is still up. This file is the single "fire right up"
+**Last updated 2026-11-12 (session 6: People and Teaching edits, Nicole's headshot, then launch prep: repo public, redirects, link previews, favicon, WordPress archive).** **LIVE on GitHub Pages since 2026-11-12** at https://dynamicog.org (DNS switched at Bluehost that day).
+The old WordPress install is still on Bluehost hosting (162.241.252.143), unreachable by name but intact. This file is the single "fire right up"
 doc: current state, what's left, and how to deploy. Background (optional): `MIGRATION-PLAN.md`,
 `dynamicog-site/README.md`.
 
@@ -215,7 +215,17 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 - [ ] **Re-enable Resources/News** if wanted (`published:` flags).
 
 ### C. Deploy (only on Nick's go — see §6)
-- [ ] Enable Pages (source `gh-pages`), verify the built `gh-pages` branch, then point DNS (§6).
+- [x] **Launched 2026-11-12.** Pages enabled (source `gh-pages`, custom domain `dynamicog.org`),
+      DNS switched at Bluehost, certificate approved for apex + www (expires 2027-02-10, GitHub
+      auto-renews), HTTPS enforced. Verified live: all pages 200, http→https and www→apex 301,
+      8/8 sampled PDFs 200, `check-site.sh` 96/96 against the live domain.
+- [ ] **Before cancelling Bluehost hosting (not before ~2026-12-10):** take a full cPanel backup
+      (WordPress files + database) and put it in Box beside `WordPress-Archive-2026-11-12/`. The
+      Box archive is media + page snapshots + the July XML export, not a restorable site.
+      Keep the domain registration (renews 2027-09-29).
+- **Rollback:** at Bluehost, set the `@` A record back to `162.241.252.143` (delete the other
+  three) and replace the `www` CNAME with an A record to the same IP. Up to 4 h to propagate;
+  works only while Bluehost hosting is still paid.
 
 ## 5. Decisions locked (do NOT re-litigate)
 - Framework al-folio; build via Docker; repo at `~/dev/dynamicog.org`.
@@ -238,7 +248,7 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 - **No one uses @dynamicog.org email** (Nick, 2026-11-12); the Bluehost MX/mail records can go
   with the hosting. Keep the domain registration (expires 2027-09-29).
 
-## 6. DEPLOY checklist (nothing live yet)
+## 6. DEPLOY checklist (DONE 2026-11-12; kept for reference)
 0. ~~Clear the demo-page blocker~~ **done session 5.**
 1. **GitHub repo**: `nickduran/dynamicog.org`, **public** (2026-11-12), `main` pushed. Do **not**
    rely on the github.io URL for verification: as a project site it serves under
