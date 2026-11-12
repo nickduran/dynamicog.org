@@ -8,8 +8,6 @@ description: >
   available. Student and postdoctoral collaborators are noted in the source list.
 nav: true
 nav_order: 3
-redirect_from:
-  - /papers/          # preserve inbound links to the old WordPress URL
 ---
 
 <!-- _pages/publications.md -->

@@ -1,7 +1,6 @@
 # DynamiCog site — session handoff & task list
 
-**Last updated 2026-11-08 (end of session 5: launch-blocker cleanup, theme 03 tile, teaching and
-Get Involved copy).** Goal: finish the al-folio site and launch `dynamicog.org` on GitHub Pages.
+**Last updated 2026-11-12 (session 6: People and Teaching edits, Nicole's headshot, then launch prep: repo public, redirects, link previews, favicon, WordPress archive).** Goal: finish the al-folio site and launch `dynamicog.org` on GitHub Pages.
 Nothing is live yet; the old WordPress site is still up. This file is the single "fire right up"
 doc: current state, what's left, and how to deploy. Background (optional): `MIGRATION-PLAN.md`,
 `dynamicog-site/README.md`.
@@ -73,7 +72,10 @@ dc25c4d feat(site): retire research page (redirect to /#research), chip arrows, 
 324dc6b chore(home): regression checks, overrides audit, handoff update
 ... (11 earlier commits back to e9ef82b, the imported al-folio snapshot)
 ```
-Whether `d5ff165` and the handoff commit after it are pushed: check `git status -sb`.
+Session 6 work and the launch prep are committed and pushed (see `git log`). The repo was made
+**public** on 2026-11-12 so GitHub Pages works without GitHub Pro. The `computation.png` change
+that predated session 6 is the revised tile from 2026-11-11 (byte-identical to
+`Art-Direction/generated/computation-tile-1800x1200-2026-11-11.png`, provenance note beside it).
 
 ## 3. DONE and verified (in the browser)
 
@@ -146,28 +148,67 @@ original WordPress description verbatim, and a hand-written **Selected papers** 
 images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 `robot-coadaptation.jpg`); the other nine came from the old site.
 
+**Launch prep (2026-11-12, session 6)**
+
+- **Redirects:** `jekyll-redirect-from` is *not* installed, so the old `redirect_from: /papers/` on
+  the publications page never worked (it 404'd). Replaced with a local `_layouts/redirect.liquid`
+  (meta refresh + canonical + noindex) and front-matter-only stubs: `_pages/redirect-papers.md`
+  (`/papers/` → `/publications/`) and `_pages/redirect-get-involved-2.md` (`/get-involved-2/` →
+  `/get-involved/`). Add more by copying a stub and changing `permalink`/`redirect_to`.
+- **Link previews:** `serve_og_meta: true`; `og_image` is `assets/img/og-image.jpg` (1200×630, the
+  gold banner over a blurred, darkened copy of itself, absolute URL).
+- **Favicon:** `assets/img/favicon.png` (192×192 gold DejaVu Serif "D" on charcoal `#1b1a17`),
+  replacing the 🧠 emoji.
+- **Footer:** "Built with al-folio" credit dropped (`footer_text`).
+- **Deploy workflow:** `publications/**` and `CNAME` added to the push path filter, so a new
+  paper PDF alone triggers a rebuild.
+- **WordPress archive:** all 102 files under `wp-content/uploads/` referenced by the export, plus
+  rendered HTML of the ten published pages, saved to Box
+  `Website-Redesign/WordPress-Archive-2026-11-12/` (README inside).
+- Checks: 96 assertions, all passing; production build verified (CNAME, stubs, og tag present).
+
+**Session 6 (2026-11-12), People and Teaching**
+
+- People: Graduate Students now above Lab Manager; Nicole is "PhD Graduate Student" with a real
+  headshot (`assets/img/people/jiahan_li.jpg`, 800×800, face-centered crop of her profile photo).
+- People: Lab Director gets a photo placeholder (`people_image:`), a "Curriculum vitae" link under
+  the name (`cv:`, placeholder `#`), and a Research interests line (`interests:`). UCL affiliation
+  dropped from the bio. A Topics chip row was tried and removed at Nick's call.
+- People: RAs are Annabelle Deason, Rebekah King (senior, `senior: true`, photo placeholders), then
+  Samantha Slogoff, Samantha Lee, Linrui Han, Rashi Sharma (names only). Nadia Talanker, Niyati
+  Naveen Nair, Madison Jaques, Judah Castillo removed.
+- People: alumni are now the 16 Master's committee chair/supervisor students from the CV, with year.
+  Josh Maxwell (not on the CV list) dropped. "Mohammandpour" copied as the CV spells it.
+- People: collaborators added (Jessica Salerno, Wagahta Semere, Mary Reed, Nicole Roberts, Angela
+  Stewart, Chris Street) and reordered per Nick.
+- Teaching: FDS sequence heading + intro dropped; PSY 371F rewritten toward the planned ML course
+  (source: BDS 512 syllabus, Powell & Falandays, ASU); Sensation & Perception added to the ASU list.
+
 ## 4. TASK LIST — what's left
 
 ### A. Needs Nick's input / assets
 - [ ] **Theme wording**: titles, blurbs, headline, lede are Claude's drafts; edit `_data/themes.yml`
       and `_pages/about.md` front matter.
 - [ ] **Review session-5 copy**: teaching descriptions and the Get Involved NBC paragraph are
-      Claude's drafts. Confirm the course titles match the catalog (the FDS I materials use both
+      Claude's drafts (PSY 371F and Sensation & Perception reworked with Nick in session 6). Confirm the course titles match the catalog (the FDS I materials use both
       "Foundations of Psychological Data Science I" and "Psychology Data Science Foundations I").
-- [ ] **RA roster**: Nadia Talanker and Madison Jaques have been unreachable since June per
-      `CLAUDE.md`; still listed. Mona Xue's role is unrecorded, so she is not listed.
+- [ ] **CV link**: People page shows a "Curriculum vitae" link under Nick's name that points to
+      `#`. Not a launch blocker (Nick, 2026-11-12: fine to launch with `#`). Drop the PDF in
+      `assets/pdf/` and set `cv:` in `_data/people.yml`.
+- [ ] **Old poster pages**: `/lie2me-cogsci-2019-presentation-materials/`, `/cps-psychonomics/`,
+      `/outreach/` have no new equivalent and will 404 after cutover. Content and PDFs are in the
+      Box WordPress archive; port as pages or add redirect stubs if Nick wants them.
 - [ ] **Human-Robot Co-Adaptation image**: generated filler, not a real image.
-- [ ] **Grad/RA/lab-manager photos**: optional; square images in `assets/img/people/` (folder does
-      not exist yet) plus `image:` fields in `_data/people.yml`.
+- [ ] **People photos**: Nicole's is in (2026-11-12). Still placeholders: Nick (`people_image:`,
+      separate from the home-page `prof_pic.jpg`), Farhana, and the two senior RAs (Annabelle,
+      Rebekah). Square images in `assets/img/people/` plus the `image:` field.
 - [ ] **Skim publication details**: a few proceedings may lack volume/pages.
 
 ### B. Can be done autonomously
-- [ ] **Footer credit** still says "Built with al-folio". Fine to keep; drop if unwanted.
 - [ ] **Re-enable Resources/News** if wanted (`published:` flags).
 
 ### C. Deploy (only on Nick's go — see §6)
-- [ ] Decide Pages hosting for a private repo (GitHub Pro, or make the repo public), enable Pages,
-      verify the github.io URL, then point DNS.
+- [ ] Enable Pages (source `gh-pages`), verify the built `gh-pages` branch, then point DNS (§6).
 
 ## 5. Decisions locked (do NOT re-litigate)
 - Framework al-folio; build via Docker; repo at `~/dev/dynamicog.org`.
@@ -186,16 +227,24 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 - **No blog, CV page, books, or repositories pages** (removed session 5).
 - **Teaching page:** UT FDS sequence first; ASU courses kept but small, at the bottom.
 - **Get Involved:** PhD recruitment framed through the NBC area.
+- **Repo is public** (2026-11-12), chosen over paying for GitHub Pro.
+- **No one uses @dynamicog.org email** (Nick, 2026-11-12); the Bluehost MX/mail records can go
+  with the hosting. Keep the domain registration (expires 2027-09-29).
 
 ## 6. DEPLOY checklist (nothing live yet)
 0. ~~Clear the demo-page blocker~~ **done session 5.**
-1. **GitHub repo**: `nickduran/dynamicog.org`, private, `main` pushed. **GitHub Pages on a private
-   repo needs GitHub Pro or the repo made public**; decide at deploy time. Verify the
-   GitHub-hosted URL completely **before** touching DNS.
+1. **GitHub repo**: `nickduran/dynamicog.org`, **public** (2026-11-12), `main` pushed. Do **not**
+   rely on the github.io URL for verification: as a project site it serves under
+   `/dynamicog.org/`, but `baseurl` is `""`, so CSS and links break there, and once the custom
+   domain is set it redirects to dynamicog.org anyway. Verify instead by checking out the
+   `gh-pages` branch the Action builds and serving it locally (`python3 -m http.server`), or rely
+   on the production build plus `check-site.sh`. Publication PDF links are absolute
+   `https://dynamicog.org/...` and only resolve after cutover.
 2. **Action**: al-folio's stock `.github/workflows/deploy.yml` (jekyll-scholar + imagemagick →
    `gh-pages`) is the only workflow. `CNAME` (= `dynamicog.org`) is at repo root.
 3. **Settings → Pages**: source `gh-pages`; custom domain `dynamicog.org`; Enforce HTTPS after cert.
-4. **DNS at registrar** (`whois dynamicog.org` first; likely Bluehost):
+4. **DNS at Bluehost** (registrar and nameservers confirmed 2026-11-12; currently A → 162.241.252.143).
+   Change only the `@` A records and `www`; mail records are irrelevant (no one uses the mail):
    | Type | Host | Value |
    |------|------|-------|
    | A | @ | 185.199.108.153 |

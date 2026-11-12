@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  {% comment %}
+    Redirect stub for an old WordPress URL. No redirect plugin is configured (jekyll-redirect-from
+    is not installed), so this is a plain meta refresh. Set `redirect_to:` in the stub's front matter.
+  {% endcomment %}
+  <meta http-equiv="refresh" content="0; url={{ page.redirect_to }}">
+  <link rel="canonical" href="{{ page.redirect_to | absolute_url }}">
+  <meta name="robots" content="noindex">
+  <title>Moved · DynamiCog Lab</title>
+</head>
+<body>
+  <p>This page has moved to <a href="{{ page.redirect_to }}">{{ page.redirect_to | absolute_url }}</a>.</p>
+</body>
+</html>

@@ -43,7 +43,7 @@ assert_contains "css: brand font Fraunces"      "$BASE/assets/css/main.css" '\.n
 # ---- Task 2: footer ---------------------------------------------------------
 assert_contains "footer: dc-footer present"   "$BASE/" '<footer class="dc-footer"'
 assert_contains "footer: UT lockup"           "$BASE/" 'dc-footer__lockup[^>]*ut_psychology_logo\.png'
-assert_contains "footer: credit line"         "$BASE/" 'Nick D\. Duran · DynamiCog Lab · Built with'
+assert_contains "footer: credit line"         "$BASE/" 'Nick D\. Duran · DynamiCog Lab'
 assert_count    "footer: no Jekyll/GitHub Pages credit" "$BASE/" 'Powered by' 0
 assert_contains "footer: also on publications" "$BASE/publications/" '<footer class="dc-footer"'
 assert_contains "dark: lockup inverted"       "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-footer__lockup\s*\{[^}]*invert'
@@ -123,6 +123,14 @@ assert_contains "teaching: FDS II" "$BASE/teaching/" 'PSY 371F'
 assert_count    "teaching: no placeholder" "$BASE/teaching/" 'To be added' 0
 assert_contains "teaching: ASU block is the small archive" "$BASE/teaching/" 'class="teaching-archive"'
 assert_contains "get-involved: names the NBC area" "$BASE/get-involved/" 'Natural Behavior and Computation'
+
+# ---- Launch prep (2026-11-12) ------------------------------------------------
+assert_contains "redirect: /papers/ -> /publications/"        "$BASE/papers/"         'http-equiv="refresh" content="0; url=/publications/"'
+assert_contains "redirect: /get-involved-2/ -> /get-involved/" "$BASE/get-involved-2/" 'http-equiv="refresh" content="0; url=/get-involved/"'
+assert_contains "og: preview image meta"  "$BASE/" 'property="og:image" content="https://dynamicog.org/assets/img/og-image.jpg"'
+assert_status   "$BASE/assets/img/og-image.jpg" 200
+assert_contains "favicon: monogram png"   "$BASE/" 'rel="shortcut icon" href="/assets/img/favicon\.png'
+assert_count    "footer: no al-folio credit" "$BASE/" 'Built with' 0
 
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]
