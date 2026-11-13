@@ -139,5 +139,7 @@ assert_count    "teaching: gold break before ASU courses" "$BASE/teaching/" 'cla
 assert_count    "publications: no empty thumbnail column" "$BASE/publications/" 'col col-sm-2 abbr' 0
 assert_contains "publications: entries full width" "$BASE/publications/" 'class="col-12"'
 
+assert_contains "navbar: shortcut hint hidden, icon kept" "$BASE/assets/css/main.css" '#search-toggle \.nav-link\s*\{\s*font-size:\s*0'
+
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

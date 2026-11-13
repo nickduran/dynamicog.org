@@ -186,6 +186,10 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
   `enable_publication_thumbnails: false` and local `bib.liquid` uses `col-12`, removing an empty
   left column that offset every entry (no paper has a thumbnail or abbr badge; turn it back on
   only if some do).
+- **Navbar (2026-11-13):** the "⌘ k" / "ctrl k" search-shortcut hint is hidden by CSS
+  (`#search-toggle .nav-link { font-size: 0 }`, icon restored to 1rem); the magnifying glass and
+  the shortcut still work. CSS rather than a header override because al_search's
+  `shortcut-key.js` rewrites that label's innerHTML on Macs.
 - `gh` defaults to the `upstream` remote (al-folio) unless told otherwise; `gh repo set-default
   nickduran/dynamicog.org` was run 2026-11-12. Use `-R nickduran/dynamicog.org` if in doubt.
 

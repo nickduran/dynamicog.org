@@ -529,6 +529,13 @@ hr.section-break {
   margin-bottom: 1.25rem;
 }
 
+/* Navbar search: hide the "ctrl k" / "⌘ k" shortcut hint, keep the magnifying
+   glass (Nick, 2026-11-13). The hint is a bare text node that al_search's
+   shortcut-key.js rewrites on Macs, so it is hidden by zeroing the link's font
+   size and restoring it on the icon. The shortcut itself still works. */
+#search-toggle .nav-link { font-size: 0; }
+#search-toggle .nav-link i { font-size: 1rem; }
+
 /* -------------------------------------------------------------------------
    Footer (spec §6 item 4): in-flow, gold rule, UT lockup left, credit right.
    Rendered by the local _includes/footer.liquid override.
