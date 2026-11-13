@@ -1,6 +1,6 @@
 # DynamiCog site — session handoff & task list
 
-**Last updated 2026-11-12 (session 6: People and Teaching edits, Nicole's headshot, then launch prep: repo public, redirects, link previews, favicon, WordPress archive).** **LIVE on GitHub Pages since 2026-11-12** at https://dynamicog.org (DNS switched at Bluehost that day).
+**Last updated 2026-11-13 (session 7: launch, then wider large-screen layout, People/Publications/Teaching polish, brain banner replaced by flowing lines, ⌘K hint hidden; closed with `lab-session-close`, ADR-0025 and ADR-0026 written).** **LIVE on GitHub Pages since 2026-11-12** at https://dynamicog.org (DNS switched at Bluehost that day).
 The old WordPress install is still on Bluehost hosting (162.241.252.143), unreachable by name but intact. This file is the single "fire right up"
 doc: current state, what's left, and how to deploy. Background (optional): `MIGRATION-PLAN.md`,
 `dynamicog-site/README.md`.
@@ -54,8 +54,8 @@ docker compose down               # stop when done
 
 ## 2. Current git state
 
-Branch `main`, tracking **`origin` = `https://github.com/nickduran/dynamicog.org` (private, created
-2026-11-08)**. The al-folio template remote is `upstream`.
+Branch `main`, tracking **`origin` = `https://github.com/nickduran/dynamicog.org` (created 2026-11-08,
+public since 2026-11-12, ADR-0025)**. `gh` default repo is set to it (`gh repo set-default`), not upstream. The al-folio template remote is `upstream`.
 
 **History was rewritten once, 2026-11-08, before the first push** (shallow clone grafted to a true
 root; ~49 MB). Older notes citing `349e5be`, `c759159`, `26aa0a9`, etc. refer to the same history
@@ -283,7 +283,7 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 2. **Action**: al-folio's stock `.github/workflows/deploy.yml` (jekyll-scholar + imagemagick →
    `gh-pages`) is the only workflow. `CNAME` (= `dynamicog.org`) is at repo root.
 3. **Settings → Pages**: source `gh-pages`; custom domain `dynamicog.org`; Enforce HTTPS after cert.
-4. **DNS at Bluehost** (registrar and nameservers confirmed 2026-11-12; currently A → 162.241.252.143).
+4. **DNS at Bluehost** (registrar and nameservers confirmed 2026-11-12; switched to the records below that day; was A → 162.241.252.143).
    Change only the `@` A records and `www`; mail records are irrelevant (no one uses the mail):
    | Type | Host | Value |
    |------|------|-------|
