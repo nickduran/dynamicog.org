@@ -109,8 +109,8 @@ that predated session 6 is the revised tile from 2026-11-11 (byte-identical to
   `_data/themes.yml` (title, blurb, `image`, `projects` slugs). Unresolved slugs emit
   `<!-- theme-row: unresolved project slug "x" -->`. Chips carry a gold ↗ (`.dc-chip::after`).
 - **Look:** "Paper" light (cream `#f6f1e7`, charcoal, gold `#c9a227`, links gold-deep `#8a6f12`);
-  "Ink" dark (near-black, cream type, the gold neural banner as a full-bleed band behind the
-  headline). Fraunces + Inter site-wide. Footer in-flow, UT lockup left, short credit right
+  "Ink" dark (near-black, cream type; same hero layout as light. The gold brain banner that sat
+  behind the dark-mode headline was removed 2026-11-13, see §5). Fraunces + Inter site-wide. Footer in-flow, UT lockup left, short credit right
   (`_includes/footer.liquid`).
 - **Theme tiles: all four are real drawings** (each 1800×1200, square Nano Banana source
   padded to 3:2 by stretching only clean paper margins, or center-cropped when wider than 3:2):
@@ -155,8 +155,8 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
   (meta refresh + canonical + noindex) and front-matter-only stubs: `_pages/redirect-papers.md`
   (`/papers/` → `/publications/`) and `_pages/redirect-get-involved-2.md` (`/get-involved-2/` →
   `/get-involved/`). Add more by copying a stub and changing `permalink`/`redirect_to`.
-- **Link previews:** `serve_og_meta: true`; `og_image` is `assets/img/og-image.jpg` (1200×630, the
-  gold banner over a blurred, darkened copy of itself, absolute URL).
+- **Link previews:** `serve_og_meta: true`; `og_image` is `assets/img/og-image.jpg` (1200×630, absolute URL). Since
+  2026-11-13 it is a center crop of the theme 01 tile (`themes/coordination.png`); it was the brain banner.
 - **Favicon:** `assets/img/favicon.png` (192×192 gold DejaVu Serif "D" on charcoal `#1b1a17`),
   replacing the 🧠 emoji.
 - **Footer:** "Built with al-folio" credit dropped (`footer_text`).
@@ -258,6 +258,10 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 - **No blog, CV page, books, or repositories pages** (removed session 5).
 - **Teaching page:** UT FDS sequence first; ASU courses kept but small, at the bottom.
 - **Get Involved:** PhD recruitment framed through the NBC area.
+- **No brain imagery (2026-11-13, Nick):** the gold brain banner reads as cognitive neuroscience,
+  which Nick wants distance from. Removed from dark mode and the link preview;
+  `assets/img/banner_brain.png` deleted. It was Greg Dunn's artwork "Self Reflected" (gregadunn.com),
+  so any return needs his licence. No replacement banner yet; Nick is thinking about one.
 - **Repo is public** (2026-11-12), chosen over paying for GitHub Pro.
 - **No one uses @dynamicog.org email** (Nick, 2026-11-12); the Bluehost MX/mail records can go
   with the hosting. Keep the domain registration (expires 2027-09-29).

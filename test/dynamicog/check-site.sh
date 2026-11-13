@@ -75,8 +75,6 @@ assert_count    "themes: no unresolved slugs"     "$BASE/" 'theme-row: unresolve
 assert_count    "themes: 13 chips total"          "$BASE/" 'class="dc-chip"' 13
 
 # ---- Task 5: dark mode (Ink) ------------------------------------------------
-assert_contains "dark: band has banner image" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band::before\s*\{[^}]*banner_brain\.png'
-assert_contains "dark: hero areas reflow"     "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero\s*\{[^}]*grid-template-areas:\s*"band band"'
 
 # ---- Task 7: regression on other pages --------------------------------------
 for pg in /projects/ /people/ /publications/ /teaching/ /get-involved/; do assert_status "$BASE$pg" 200; done
@@ -90,9 +88,6 @@ assert_contains "css: gold-deep meets AA on cream (#7f6611)" "$BASE/assets/css/m
 assert_count    "hero: four nowrap method spans"  "$BASE/" '<span class="dc-hero__method">' 4
 assert_contains "css: method spans nowrap"        "$BASE/assets/css/main.css" '\.dc-hero__method\s*\{[^}]*white-space:\s*nowrap'
 assert_contains "css: headline accent nowrap"     "$BASE/assets/css/main.css" '\.dc-hero__accent\s*\{[^}]*white-space:\s*nowrap'
-assert_contains "css: dark band bleeds via pseudo-element, box stays in container" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band::before\s*\{[^}]*left:\s*calc\(50% - 50vw\)[^}]*right:\s*calc\(50% - 50vw\)'
-assert_cmd      "banner: left column is dark (white frame trimmed)" "docker exec dynamicogorg-jekyll-1 magick /srv/jekyll/assets/img/banner_brain.png -crop 1x631+0+0 +repage -format '%[fx:int(255*mean)<100?1:0]' info:" "1"
-assert_cmd      "banner: top row is dark (white frame trimmed)"  "docker exec dynamicogorg-jekyll-1 magick /srv/jekyll/assets/img/banner_brain.png -crop 834x1+0+0 +repage -format '%[fx:int(255*mean)<100?1:0]' info:" "1"
 
 # ---- Retire research tab, chip arrows, first real tile (2026-11-08) ---------
 assert_contains "themes: section anchored as #research" "$BASE/" '<section class="dc-themes" id="research"'
@@ -129,6 +124,8 @@ assert_contains "redirect: /papers/ -> /publications/"        "$BASE/papers/"   
 assert_contains "redirect: /get-involved-2/ -> /get-involved/" "$BASE/get-involved-2/" 'http-equiv="refresh" content="0; url=/get-involved/"'
 assert_contains "og: preview image meta"  "$BASE/" 'property="og:image" content="https://dynamicog.org/assets/img/og-image.jpg"'
 assert_status   "$BASE/assets/img/og-image.jpg" 200
+assert_count    "no brain banner anywhere in css (removed 2026-11-13)" "$BASE/assets/css/main.css" 'banner_brain' 0
+assert_status   "$BASE/assets/img/banner_brain.png" 404
 assert_contains "favicon: monogram png"   "$BASE/" 'rel="shortcut icon" href="/assets/img/favicon\.png'
 assert_count    "footer: no al-folio credit" "$BASE/" 'Built with' 0
 
