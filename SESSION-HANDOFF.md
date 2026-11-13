@@ -171,6 +171,12 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
   dot-folders are now in `exclude:` (they were being published).
 - Checks: 96 assertions, all passing against both the Docker preview and the built `gh-pages`
   branch served locally (which includes the purgecss step the preview skips).
+- **Wider layout on large screens (2026-11-12, after launch):** at >=1200px the column is 1140px
+  (was 930) and type scales by 1.125 (root `font-size: 18px` plus the home page's px sizes);
+  below 1200px nothing changed. One media block at the end of `main.scss`; `max_width` in
+  `_config.yml` stays 930px for narrower windows. Prompted by Nick comparing live (100%) with a
+  localhost tab Chrome had zoomed to 140%; Chrome zoom is per-site, so check zoom before judging
+  layout differences between preview and live.
 - `gh` defaults to the `upstream` remote (al-folio) unless told otherwise; `gh repo set-default
   nickduran/dynamicog.org` was run 2026-11-12. Use `-R nickduran/dynamicog.org` if in doubt.
 

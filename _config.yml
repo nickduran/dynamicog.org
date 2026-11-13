@@ -90,7 +90,7 @@ posts_in_search: true
 bib_search: true
 
 # Dimensions
-max_width: 930px
+max_width: 930px # below 1200px; widens to 1140px at >=1200px (end of main.scss, 2026-11-12)
 
 # -----------------------------------------------------------------------------
 # Open Graph & Schema.org

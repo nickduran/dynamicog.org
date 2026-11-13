@@ -567,3 +567,36 @@ html[data-theme="dark"] .dc-footer__lockup {
     padding-left: 1.1rem;
   }
 }
+
+/* -------------------------------------------------------------------------
+   Wide screens (Nick, 2026-11-12). At >=1200px the column widens from 930px
+   (max_width in _config.yml, still used below 1200px so narrower windows keep
+   their side margins) to 1140px, and everything type-like scales by 1.125:
+   the root font size (all rem-based text on every page) and the home page's
+   px-sized hero, theme rows, chips, and footer. Below 1200px nothing changes.
+   ------------------------------------------------------------------------- */
+@media (min-width: 1200px) {
+  .container { max-width: 1140px; }
+  html { font-size: 18px; }
+
+  .dc-hero { grid-template-columns: 1fr 225px; column-gap: 48px; padding-top: 50px; }
+  .dc-hero__eyebrow { font-size: 13.5px; }
+  .dc-hero__eyebrow-sub { font-size: 14.5px; }
+  .dc-hero__lede { max-width: 700px; font-size: 19px; }
+  .dc-hero__methods,
+  .dc-hero__links { font-size: 14px; }
+  .dc-hero__recruiting { font-size: 15px; }
+  .dc-hero__photo .dc-hero__img,
+  .dc-hero__photo picture img { width: 225px; height: 225px; }
+  .dc-hero__director { font-size: 13.5px; }
+
+  .dc-themes { margin-top: 38px; }
+  .dc-theme { grid-template-columns: 360px 1fr; column-gap: 40px; padding: 34px 0; }
+  .dc-theme__num { font-size: 14.5px; }
+  .dc-theme__title { font-size: 31.5px; }
+  .dc-theme__blurb { max-width: 680px; font-size: 17.5px; }
+  .dc-chip { padding: 6px 11px; font-size: 13.5px; }
+
+  .dc-footer { font-size: 13.5px; }
+  .dc-footer__lockup { height: 38px; }
+}
