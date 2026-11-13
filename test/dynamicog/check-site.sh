@@ -126,6 +126,9 @@ assert_contains "og: preview image meta"  "$BASE/" 'property="og:image" content=
 assert_status   "$BASE/assets/img/og-image.jpg" 200
 assert_count    "no brain banner anywhere in css (removed 2026-11-13)" "$BASE/assets/css/main.css" 'banner_brain' 0
 assert_status   "$BASE/assets/img/banner_brain.png" 404
+assert_contains "dark: band carries the flowing-lines banner" "$BASE/assets/css/main.css" 'html\[data-theme="?dark"?\] \.dc-hero__band::before\s*\{[^}]*banner_lines\.jpg'
+assert_status   "$BASE/assets/img/banner_lines.jpg" 200
+assert_count    "light: no banner on the light hero" "$BASE/assets/css/main.css" '(^|\})\.dc-hero__band::before' 0
 assert_contains "favicon: monogram png"   "$BASE/" 'rel="shortcut icon" href="/assets/img/favicon\.png'
 assert_count    "footer: no al-folio credit" "$BASE/" 'Built with' 0
 

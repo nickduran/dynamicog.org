@@ -109,8 +109,9 @@ that predated session 6 is the revised tile from 2026-11-11 (byte-identical to
   `_data/themes.yml` (title, blurb, `image`, `projects` slugs). Unresolved slugs emit
   `<!-- theme-row: unresolved project slug "x" -->`. Chips carry a gold ↗ (`.dc-chip::after`).
 - **Look:** "Paper" light (cream `#f6f1e7`, charcoal, gold `#c9a227`, links gold-deep `#8a6f12`);
-  "Ink" dark (near-black, cream type; same hero layout as light. The gold brain banner that sat
-  behind the dark-mode headline was removed 2026-11-13, see §5). Fraunces + Inter site-wide. Footer in-flow, UT lockup left, short credit right
+  "Ink" dark (near-black, cream type, a full-bleed banner behind the eyebrow + headline). Since
+  2026-11-13 the banner is two flowing line families, copper and lavender (`assets/img/banner_lines.jpg`;
+  source + note in `Art-Direction/generated/dark-banner-*-2026-11-13.*`). Light mode has no banner. Fraunces + Inter site-wide. Footer in-flow, UT lockup left, short credit right
   (`_includes/footer.liquid`).
 - **Theme tiles: all four are real drawings** (each 1800×1200, square Nano Banana source
   padded to 3:2 by stretching only clean paper margins, or center-cropped when wider than 3:2):
@@ -261,7 +262,7 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
 - **No brain imagery (2026-11-13, Nick):** the gold brain banner reads as cognitive neuroscience,
   which Nick wants distance from. Removed from dark mode and the link preview;
   `assets/img/banner_brain.png` deleted. It was Greg Dunn's artwork "Self Reflected" (gregadunn.com),
-  so any return needs his licence. No replacement banner yet; Nick is thinking about one.
+  so any return needs his licence. Replaced the same day by the flowing-lines banner (dark mode only).
 - **Repo is public** (2026-11-12), chosen over paying for GitHub Pro.
 - **No one uses @dynamicog.org email** (Nick, 2026-11-12); the Bluehost MX/mail records can go
   with the hosting. Keep the domain registration (expires 2027-09-29).
