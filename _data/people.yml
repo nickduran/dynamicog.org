@@ -42,8 +42,8 @@ grad_students:
     image: jiahan_li.jpg
 
 # Current undergraduate research assistants (Fall 2026)
-# Senior RAs (senior: true) get a photo slot: a placeholder until `image:` is set.
-# Everyone else is listed by name only.
+# Listed by name only; senior RAs first. No placeholder photos (Nick, 2026-11-13).
+# To show a real photo for anyone, add `image: <file>` (square, in assets/img/people/).
 research_assistants:
   - name: Annabelle Deason
     senior: true

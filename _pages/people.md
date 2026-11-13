@@ -32,7 +32,7 @@ nav_order: 2
 <p class="director-interests"><span class="director-label">Research interests.</span> {{ p.director.interests | join: "; " }}.</p>
 {% endif %}
 
----
+<hr class="section-break">
 
 ## Graduate Students
 
@@ -82,8 +82,6 @@ _Currently recruiting — see [Get Involved](/get-involved/)._
   <div class="person-card">
     {% if s.image %}
       <img class="person-photo" src="{{ s.image | prepend: 'assets/img/people/' | relative_url }}" alt="{{ s.name }}" />
-    {% elsif s.senior %}
-      <div class="person-photo person-photo--placeholder" aria-hidden="true"><i class="fa-solid fa-user"></i></div>
     {% endif %}
     <div class="person-info">
       <span class="person-name">{{ s.name }}</span>
@@ -92,14 +90,15 @@ _Currently recruiting — see [Get Involved](/get-involved/)._
 {% endfor %}
 </div>
 
----
+<!-- hr.section-break: wider, gold section breaks (Nick, 2026-11-13). Director | current members | alumni | collaborators. -->
+<hr class="section-break">
 
 ## Alumni (Master's, Committee Chair)
 {% for a in p.grad_alumni %}
 - **{{ a.name }}**{% if a.note %} ({{ a.note }}){% endif %}{% if a.placement %}, {{ a.placement }}{% endif %}{% if a.year %} ({{ a.year }}){% endif %}
 {% endfor %}
 
----
+<hr class="section-break">
 
 ## Faculty Collaborators
 {% for c in p.collaborators %}{{ c }}{% unless forloop.last %} · {% endunless %}{% endfor %}

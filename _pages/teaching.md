@@ -22,7 +22,7 @@ models and how to interpret them, unsupervised methods such as clustering and pr
 analysis, and neural networks for images and text. The math (probability, functions, vectors) comes
 in as needed, but the course is built around projects on real behavioral data. Students finish with a machine learning project of their own.
 
----
+<hr class="section-break">
 
 <div class="teaching-archive" markdown="1">
 

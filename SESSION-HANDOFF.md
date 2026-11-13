@@ -177,6 +177,14 @@ images are generated filler (`discourse-analysis.jpg`, `semantic-models.jpg`,
   `_config.yml` stays 930px for narrower windows. Prompted by Nick comparing live (100%) with a
   localhost tab Chrome had zoomed to 140%; Chrome zoom is per-site, so check zoom before judging
   layout differences between preview and live.
+- **Polish (2026-11-13):** People: placeholders dropped for Annabelle and Rebekah (all RAs are
+  name-only unless `image:` is set; the `senior` flag only orders them now); grad-card grid
+  widened (`minmax(min(340px,100%),1fr)`) so Nicole's name/role don't wrap; gold
+  `hr.section-break` dividers (extra space + thin gold rule) between director | current members |
+  alumni | collaborators, and on Teaching before the ASU courses. Publications:
+  `enable_publication_thumbnails: false` and local `bib.liquid` uses `col-12`, removing an empty
+  left column that offset every entry (no paper has a thumbnail or abbr badge; turn it back on
+  only if some do).
 - `gh` defaults to the `upstream` remote (al-folio) unless told otherwise; `gh repo set-default
   nickduran/dynamicog.org` was run 2026-11-12. Use `-R nickduran/dynamicog.org` if in doubt.
 

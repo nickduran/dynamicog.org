@@ -132,5 +132,12 @@ assert_status   "$BASE/assets/img/og-image.jpg" 200
 assert_contains "favicon: monogram png"   "$BASE/" 'rel="shortcut icon" href="/assets/img/favicon\.png'
 assert_count    "footer: no al-folio credit" "$BASE/" 'Built with' 0
 
+# ---- People / publications / teaching polish (2026-11-13) ---------------------
+assert_count    "people: three gold section breaks" "$BASE/people/" 'class="section-break"' 3
+assert_count    "people: RA grid has no placeholders" "$BASE/people/" 'people-grid--ra">[^<]*<div class="person-card">[^<]*<div class="person-photo--placeholder' 0
+assert_count    "teaching: gold break before ASU courses" "$BASE/teaching/" 'class="section-break"' 1
+assert_count    "publications: no empty thumbnail column" "$BASE/publications/" 'col col-sm-2 abbr' 0
+assert_contains "publications: entries full width" "$BASE/publications/" 'class="col-12"'
+
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

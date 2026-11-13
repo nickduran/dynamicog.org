@@ -467,7 +467,12 @@ html[data-theme="dark"] .dc-hero__photo picture img {
   color: var(--global-text-color-light);
 }
 
-/* Graduate students: larger photo box + name/label. */
+/* Graduate students: larger photo box + name/label. Wider minimum column so a
+   name like "Jiahan (Nicole) Li" and its role stay on one line each. */
+.people-grid--grad {
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+}
+
 .people-grid--grad .person-photo {
   width: 88px;
   height: 88px;
@@ -483,6 +488,16 @@ html[data-theme="dark"] .dc-hero__photo picture img {
 
 .people-grid--grad .person-role {
   font-size: 0.95rem;
+}
+
+/* Gold section break (Nick, 2026-11-13): extra space and a thin gold rule.
+   People page (director | current members | alumni | collaborators) and the
+   Teaching page (before the earlier ASU courses). */
+hr.section-break {
+  margin: 3.75rem 0 2.75rem;
+  border: 0;
+  border-top: 1px solid var(--dc-gold);
+  opacity: 1;
 }
 
 /* Lab Director: bold label on the research-interest line; CV link under the name. */
