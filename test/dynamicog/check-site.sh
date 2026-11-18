@@ -79,7 +79,7 @@ assert_count    "themes: 13 chips total"          "$BASE/" 'class="dc-chip"' 13
 # ---- Task 7: regression on other pages --------------------------------------
 for pg in /projects/ /people/ /publications/ /teaching/ /get-involved/; do assert_status "$BASE$pg" 200; done
 for sl in action-dynamics-deception cps-coordination discourse-analysis dynamic-psycholinguistics language-deception linguistic-concordance multimodal-coordination patient-provider-llm perspective-taking robot-coadaptation semantic-models suspicion-911; do assert_status "$BASE/projects/$sl/" 200; done
-assert_count    "publications: 63 entries"      "$BASE/publications/" 'class="row"' 63
+assert_count    "publications: 64 entries"      "$BASE/publications/" 'class="row"' 64
 assert_contains "projects: /projects/ redirects home to #research" "$BASE/projects/" 'http-equiv="refresh"[^>]*url=/#research'
 assert_count    "nav: research link absent"      "$BASE/" 'nav-link[^>]*href="/projects/"' 0
 
